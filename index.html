@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>הקרוז 🚢</title>
+<title>×”×§×¨×•×– ðŸš¢</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;900&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script>
+window.firebaseModuleReady = new Promise(resolve => { window.resolveFirebaseModuleReady = resolve; });
+</script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import {
@@ -18,6 +18,7 @@ window.FirebaseMod = {
   initializeApp, getFirestore, collection, doc, setDoc, addDoc, getDoc,
   onSnapshot, query, orderBy, serverTimestamp, deleteDoc
 };
+window.resolveFirebaseModuleReady();
 </script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -28,11 +29,11 @@ window.FirebaseMod = {
 }
 html,body{height:100%;font-family:'Heebo',sans-serif;background:var(--navy);color:#fff;direction:rtl;overflow:hidden}
 
-/* ─── SCREENS ─── */
+/* â”€â”€â”€ SCREENS â”€â”€â”€ */
 .screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;transition:opacity .3s,transform .3s;overflow-y:auto}
 .screen.off{opacity:0;pointer-events:none;transform:scale(.97)}
 
-/* ─── STARS ─── */
+/* â”€â”€â”€ STARS â”€â”€â”€ */
 body::before{content:'';position:fixed;inset:0;
   background:radial-gradient(1px 1px at 8% 12%,#fff,transparent),
   radial-gradient(1px 1px at 22% 38%,rgba(255,255,255,.7),transparent),
@@ -47,16 +48,16 @@ body::before{content:'';position:fixed;inset:0;
   radial-gradient(1px 1px at 72% 48%,rgba(255,255,255,.6),transparent);
   pointer-events:none;z-index:0}
 
-/* ─── TYPOGRAPHY ─── */
+/* â”€â”€â”€ TYPOGRAPHY â”€â”€â”€ */
 .game-logo{font-size:clamp(2.5rem,8vw,4.5rem);font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;animation:pulse 3s ease-in-out infinite}
 @keyframes pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.25)}}
 .sub{color:rgba(255,255,255,.5);font-size:.95rem;text-align:center;margin-top:4px}
 
-/* ─── CARDS ─── */
+/* â”€â”€â”€ CARDS â”€â”€â”€ */
 .card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;backdrop-filter:blur(10px);width:min(480px,96vw)}
 .card-sm{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 20px;backdrop-filter:blur(8px)}
 
-/* ─── BUTTONS ─── */
+/* â”€â”€â”€ BUTTONS â”€â”€â”€ */
 .btn{display:block;width:100%;padding:15px;border-radius:14px;border:none;font-family:'Heebo',sans-serif;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .18s;text-align:center}
 .btn:hover:not(:disabled){filter:brightness(1.12);transform:translateY(-2px)}
 .btn:active:not(:disabled){transform:translateY(0) scale(.97)}
@@ -67,16 +68,16 @@ body::before{content:'';position:fixed;inset:0;
 .btn-ghost{background:rgba(255,255,255,.07);border:1px solid var(--border);color:#fff}
 .btn-sm{padding:10px 20px;font-size:.9rem;border-radius:10px;width:auto;display:inline-block}
 
-/* ─── INPUTS ─── */
+/* â”€â”€â”€ INPUTS â”€â”€â”€ */
 .inp{width:100%;padding:13px 16px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:#fff;font-family:'Heebo',sans-serif;font-size:1rem;outline:none;transition:border-color .2s;text-align:right}
 .inp:focus{border-color:var(--cyan)}
 .inp::placeholder{color:rgba(255,255,255,.3)}
 label{display:block;color:var(--cyan);font-size:.82rem;font-weight:600;margin-bottom:6px}
 
-/* ─── LANDING ─── */
+/* â”€â”€â”€ LANDING â”€â”€â”€ */
 #landing .card{display:flex;flex-direction:column;gap:14px;margin-top:20px}
 
-/* ─── LOBBY (HOST) ─── */
+/* â”€â”€â”€ LOBBY (HOST) â”€â”€â”€ */
 .room-code-box{background:linear-gradient(135deg,rgba(0,212,255,.15),rgba(0,212,255,.05));border:2px solid var(--cyan);border-radius:16px;padding:20px;text-align:center;margin-bottom:16px}
 .room-code-label{font-size:.8rem;color:rgba(255,255,255,.5);margin-bottom:6px}
 .room-code{font-size:3rem;font-weight:900;letter-spacing:.25em;color:var(--cyan);font-variant-numeric:tabular-nums}
@@ -89,11 +90,11 @@ label{display:block;color:var(--cyan);font-size:.82rem;font-weight:600;margin-bo
 .pji-badge{font-size:.7rem;padding:3px 8px;border-radius:20px;background:rgba(0,229,160,.15);color:var(--mint);border:1px solid rgba(0,229,160,.3)}
 .waiting-hint{text-align:center;color:rgba(255,255,255,.4);font-size:.82rem;margin-bottom:14px}
 
-/* ─── JOIN SCREEN ─── */
+/* â”€â”€â”€ JOIN SCREEN â”€â”€â”€ */
 #join .card{display:flex;flex-direction:column;gap:14px}
 .join-fields{display:flex;flex-direction:column;gap:12px}
 
-/* ─── HOST GAME SCREEN ─── */
+/* â”€â”€â”€ HOST GAME SCREEN â”€â”€â”€ */
 #host-game{flex-direction:row;align-items:flex-start;gap:14px;justify-content:center;padding:10px}
 .host-sidebar{width:200px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;padding-top:4px;max-height:100vh;overflow-y:auto}
 .board-area{flex:1;min-width:0;display:flex;align-items:center;justify-content:center}
@@ -116,7 +117,7 @@ label{display:block;color:var(--cyan);font-size:.82rem;font-weight:600;margin-bo
 .code-mini{text-align:center;font-size:.7rem;color:rgba(255,255,255,.3);margin-top:2px}
 .code-mini span{color:var(--cyan);font-weight:700;letter-spacing:.1em}
 
-/* ─── OVERLAYS ─── */
+/* â”€â”€â”€ OVERLAYS â”€â”€â”€ */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.46);z-index:80;display:flex;align-items:center;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(2px);padding:18px}
 .overlay.show{opacity:1;pointer-events:all}
 .ov-card{background:linear-gradient(135deg,#0d1f4a,#0a1530);border:1px solid var(--border);border-radius:24px;padding:32px 28px;width:min(460px,94vw);text-align:center;animation:pop .3s cubic-bezier(.34,1.56,.64,1)}
@@ -125,7 +126,7 @@ label{display:block;color:var(--cyan);font-size:.82rem;font-weight:600;margin-bo
 .ov-title{font-size:1.6rem;font-weight:900;color:var(--gold);margin-bottom:8px}
 .ov-desc{color:rgba(255,255,255,.75);line-height:1.5;margin-bottom:22px}
 
-/* ─── QUESTION OVERLAY (host) ─── */
+/* â”€â”€â”€ QUESTION OVERLAY (host) â”€â”€â”€ */
 .q-category{font-size:.75rem;color:var(--cyan);font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:.1em}
 .q-text{font-size:1.2rem;font-weight:600;margin-bottom:18px;line-height:1.5}
 .q-timer{font-size:2.5rem;font-weight:900;color:var(--gold);margin-bottom:12px}
@@ -139,7 +140,7 @@ label{display:block;color:var(--cyan);font-size:.82rem;font-weight:600;margin-bo
 .sh-red{background:#e21b3c}.sh-blue{background:#1368ce}.sh-gold{background:#d89e00}.sh-green{background:#26890c}
 .answerers-line{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:8px;min-height:18px}
 
-/* ─── PLAYER GAME SCREEN ─── */
+/* â”€â”€â”€ PLAYER GAME SCREEN â”€â”€â”€ */
 #player-game{background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0}
 .player-header{width:100%;padding:14px 16px;background:rgba(0,0,0,.3);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
 .ph-token{font-size:1.8rem}
@@ -197,22 +198,22 @@ label{display:block;color:var(--cyan);font-size:.82rem;font-weight:600;margin-bo
 .psb-pts{color:var(--gold);font-weight:700;font-size:.9rem}
 .psb-pos{font-size:.75rem;color:rgba(255,255,255,.4)}
 
-/* ─── WIN SCREEN ─── */
+/* â”€â”€â”€ WIN SCREEN â”€â”€â”€ */
 #win-screen{background:radial-gradient(ellipse at center,#0d2040,#060918)}
 .win-ship{font-size:6rem;animation:winBounce 1s ease-in-out infinite}
 @keyframes winBounce{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-20px) rotate(5deg)}}
 .win-title{font-size:clamp(2rem,7vw,3.5rem);font-weight:900;background:linear-gradient(135deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}
 .win-name{font-size:clamp(1.5rem,5vw,2.5rem);font-weight:700;text-align:center}
 
-/* ─── CONFETTI ─── */
+/* â”€â”€â”€ CONFETTI â”€â”€â”€ */
 .confetti{position:fixed;width:10px;height:10px;border-radius:2px;z-index:200;pointer-events:none;animation:cfall linear forwards}
 @keyframes cfall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
 
-/* ─── CONNECTING ─── */
+/* â”€â”€â”€ CONNECTING â”€â”€â”€ */
 .connecting-dots::after{content:'...';animation:dots 1.4s infinite}
 @keyframes dots{0%{content:'.'}33%{content:'..'}66%{content:'...'}100%{content:'.'}}
 
-/* ─── RESPONSIVE ─── */
+/* â”€â”€â”€ RESPONSIVE â”€â”€â”€ */
 @media(max-width:620px){
   #host-game{flex-direction:column;align-items:center}
   .host-sidebar{width:100%;flex-direction:row;flex-wrap:wrap;padding-top:0;max-height:none}
@@ -227,156 +228,156 @@ label{display:block;color:var(--cyan);font-size:.82rem;font-weight:600;margin-bo
 </head>
 <body>
 
-<!-- ══ LANDING ══ -->
+<!-- â•â• LANDING â•â• -->
 <div id="landing" class="screen">
-  <div class="game-logo">🚢 הקרוז</div>
-  <div class="sub">משחק לוח רב-שחקנים — קהוט ימי!</div>
+  <div class="game-logo">ðŸš¢ ×”×§×¨×•×–</div>
+  <div class="sub">×ž×©×—×§ ×œ×•×— ×¨×‘-×©×—×§× ×™× â€” ×§×”×•×˜ ×™×ž×™!</div>
   <div class="card" style="margin-top:22px;gap:12px;display:flex;flex-direction:column">
-    <button class="btn btn-cyan" onclick="goHost()">🎮 פתח משחק (מארח)</button>
-    <button class="btn btn-ghost" onclick="showJoin()">📱 הצטרף למשחק</button>
+    <button class="btn btn-cyan" onclick="goHost()">ðŸŽ® ×¤×ª×— ×ž×©×—×§ (×ž××¨×—)</button>
+    <button class="btn btn-ghost" onclick="showJoin()">ðŸ“± ×”×¦×˜×¨×£ ×œ×ž×©×—×§</button>
   </div>
   <div style="margin-top:16px;font-size:.75rem;color:rgba(255,255,255,.25);text-align:center">
-    המארח פותח את הלוח על הלפטופ.<br>השחקנים נכנסים מהטלפון עם קוד.
+    ×”×ž××¨×— ×¤×•×ª×— ××ª ×”×œ×•×— ×¢×œ ×”×œ×¤×˜×•×¤.<br>×”×©×—×§× ×™× × ×›× ×¡×™× ×ž×”×˜×œ×¤×•×Ÿ ×¢× ×§×•×“.
   </div>
 </div>
 
-<!-- ══ HOST LOBBY ══ -->
+<!-- â•â• HOST LOBBY â•â• -->
 <div id="host-lobby" class="screen off">
   <div class="card" style="max-width:420px;width:96vw">
     <div class="room-code-box">
-      <div class="room-code-label">קוד כניסה</div>
-      <div class="room-code" id="room-code-display">——</div>
+      <div class="room-code-label">×§×•×“ ×›× ×™×¡×”</div>
+      <div class="room-code" id="room-code-display">â€”â€”</div>
       <div class="join-url" id="join-url-display"></div>
     </div>
-    <div class="waiting-hint">שחקנים נכנסים עם הקוד מהטלפון</div>
+    <div class="waiting-hint">×©×—×§× ×™× × ×›× ×¡×™× ×¢× ×”×§×•×“ ×ž×”×˜×œ×¤×•×Ÿ</div>
     <div class="player-join-list" id="lobby-player-list">
-      <div style="text-align:center;color:rgba(255,255,255,.3);font-size:.85rem;padding:10px">ממתין לשחקנים<span class="connecting-dots"></span></div>
+      <div style="text-align:center;color:rgba(255,255,255,.3);font-size:.85rem;padding:10px">×ž×ž×ª×™×Ÿ ×œ×©×—×§× ×™×<span class="connecting-dots"></span></div>
     </div>
     <button class="btn btn-gold" id="start-game-btn" onclick="hostStartGame()" disabled>
-      ⚓ התחל משחק!
+      âš“ ×”×ª×—×œ ×ž×©×—×§!
     </button>
-    <div style="font-size:.72rem;color:rgba(255,255,255,.3);text-align:center;margin-top:8px">נדרש לפחות שחקן אחד</div>
+    <div style="font-size:.72rem;color:rgba(255,255,255,.3);text-align:center;margin-top:8px">× ×“×¨×© ×œ×¤×—×•×ª ×©×—×§×Ÿ ××—×“</div>
   </div>
 </div>
 
-<!-- ══ JOIN SCREEN ══ -->
+<!-- â•â• JOIN SCREEN â•â• -->
 <div id="join" class="screen off">
-  <div class="game-logo" style="font-size:2.5rem">🚢</div>
+  <div class="game-logo" style="font-size:2.5rem">ðŸš¢</div>
   <div class="card" style="margin-top:18px">
     <div class="join-fields">
       <div>
-        <label>קוד משחק</label>
-        <input class="inp" id="join-code" type="text" placeholder="הכנס קוד..." maxlength="6" oninput="this.value=this.value.toUpperCase()" style="text-align:center;letter-spacing:.2em;font-size:1.4rem;font-weight:700">
+        <label>×§×•×“ ×ž×©×—×§</label>
+        <input class="inp" id="join-code" type="text" placeholder="×”×›× ×¡ ×§×•×“..." maxlength="6" oninput="this.value=this.value.toUpperCase()" style="text-align:center;letter-spacing:.2em;font-size:1.4rem;font-weight:700">
       </div>
       <div>
-        <label>שמך</label>
-        <input class="inp" id="join-name" type="text" placeholder="שם שחקן" maxlength="16">
+        <label>×©×ž×š</label>
+        <input class="inp" id="join-name" type="text" placeholder="×©× ×©×—×§×Ÿ" maxlength="16">
       </div>
-      <button class="btn btn-cyan" id="join-btn" onclick="doJoin()">הצטרף!</button>
-      <button class="btn btn-ghost btn-sm" style="width:100%" onclick="show('landing')">חזרה</button>
+      <button class="btn btn-cyan" id="join-btn" onclick="doJoin()">×”×¦×˜×¨×£!</button>
+      <button class="btn btn-ghost btn-sm" style="width:100%" onclick="show('landing')">×—×–×¨×”</button>
     </div>
     <div id="join-error" style="color:var(--coral);font-size:.85rem;text-align:center;margin-top:8px;min-height:20px"></div>
   </div>
 </div>
 
-<!-- ══ PLAYER WAITING ══ -->
+<!-- â•â• PLAYER WAITING â•â• -->
 <div id="player-wait" class="screen off">
-  <div style="font-size:3rem;margin-bottom:12px" id="pw-token">🚢</div>
+  <div style="font-size:3rem;margin-bottom:12px" id="pw-token">ðŸš¢</div>
   <div style="font-size:1.4rem;font-weight:700;margin-bottom:6px" id="pw-name"></div>
-  <div style="color:rgba(255,255,255,.5);margin-bottom:24px">הצטרפת בהצלחה!</div>
-  <div style="font-size:3rem;animation:spin 2s linear infinite">⏳</div>
-  <div style="margin-top:16px;color:rgba(255,255,255,.4);font-size:.9rem">ממתין למארח<span class="connecting-dots"></span></div>
+  <div style="color:rgba(255,255,255,.5);margin-bottom:24px">×”×¦×˜×¨×¤×ª ×‘×”×¦×œ×—×”!</div>
+  <div style="font-size:3rem;animation:spin 2s linear infinite">â³</div>
+  <div style="margin-top:16px;color:rgba(255,255,255,.4);font-size:.9rem">×ž×ž×ª×™×Ÿ ×œ×ž××¨×—<span class="connecting-dots"></span></div>
 </div>
 
-<!-- ══ HOST GAME SCREEN ══ -->
+<!-- â•â• HOST GAME SCREEN â•â• -->
 <div id="host-game" class="screen off">
   <div class="host-sidebar">
     <div class="hud-card" style="text-align:center">
-      <div class="hud-title">תור של</div>
-      <div class="turn-token" id="hud-token">🚢</div>
-      <div class="turn-name" id="hud-name">—</div>
+      <div class="hud-title">×ª×•×¨ ×©×œ</div>
+      <div class="turn-token" id="hud-token">ðŸš¢</div>
+      <div class="turn-name" id="hud-name">â€”</div>
     </div>
     <div class="hud-card">
-      <div class="hud-title">שחקנים</div>
+      <div class="hud-title">×©×—×§× ×™×</div>
       <div class="score-list" id="hud-score-list"></div>
     </div>
-    <div class="status-pill" id="hud-status">ממתין לגלגול...</div>
-    <div class="code-mini">קוד: <span id="hud-code"></span></div>
+    <div class="status-pill" id="hud-status">×ž×ž×ª×™×Ÿ ×œ×’×œ×’×•×œ...</div>
+    <div class="code-mini">×§×•×“: <span id="hud-code"></span></div>
   </div>
   <div class="board-area">
     <svg id="board-svg" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg"></svg>
   </div>
 </div>
 
-<!-- ══ PLAYER GAME SCREEN ══ -->
+<!-- â•â• PLAYER GAME SCREEN â•â• -->
 <div id="player-game" class="screen off">
   <div class="player-header">
-    <div class="ph-token" id="pg-token">🚢</div>
+    <div class="ph-token" id="pg-token">ðŸš¢</div>
     <div>
-      <div class="ph-name" id="pg-name">שחקן</div>
-      <div class="ph-pos" id="pg-pos">שדה 1</div>
+      <div class="ph-name" id="pg-name">×©×—×§×Ÿ</div>
+      <div class="ph-pos" id="pg-pos">×©×“×” 1</div>
     </div>
-    <div class="ph-score" id="pg-score">0 נק׳</div>
+    <div class="ph-score" id="pg-score">0 × ×§×³</div>
   </div>
   <div class="player-body" id="player-body">
     <div class="waiting-msg">
-      <span class="waiting-spinner">⏳</span>
-      ממתין למארח...
+      <span class="waiting-spinner">â³</span>
+      ×ž×ž×ª×™×Ÿ ×œ×ž××¨×—...
     </div>
   </div>
 </div>
 
-<!-- ══ WIN SCREEN ══ -->
+<!-- â•â• WIN SCREEN â•â• -->
 <div id="win-screen" class="screen off">
-  <div class="win-ship" id="win-ship">🚢</div>
-  <div class="win-title">🏆 הגענו לנמל! 🏆</div>
+  <div class="win-ship" id="win-ship">ðŸš¢</div>
+  <div class="win-title">ðŸ† ×”×’×¢× ×• ×œ× ×ž×œ! ðŸ†</div>
   <div class="win-name" id="win-name"></div>
-  <div style="color:rgba(255,255,255,.5);margin:8px 0 24px">ניצח את המסע!</div>
+  <div style="color:rgba(255,255,255,.5);margin:8px 0 24px">× ×™×¦×— ××ª ×”×ž×¡×¢!</div>
   <div class="player-scoreboard" id="win-scoreboard" style="max-width:420px;width:95vw"></div>
-  <button class="btn btn-gold btn-sm" style="margin-top:20px" onclick="location.reload()">🔄 משחק חדש</button>
+  <button class="btn btn-gold btn-sm" style="margin-top:20px" onclick="location.reload()">ðŸ”„ ×ž×©×—×§ ×—×“×©</button>
 </div>
 
-<!-- ══ HOST: EVENT OVERLAY ══ -->
+<!-- â•â• HOST: EVENT OVERLAY â•â• -->
 <div id="ov-event" class="overlay">
   <div class="ov-card">
-    <div class="ov-emoji" id="ove-emoji">⚡</div>
-    <div class="ov-title" id="ove-title">אירוע!</div>
+    <div class="ov-emoji" id="ove-emoji">âš¡</div>
+    <div class="ov-title" id="ove-title">××™×¨×•×¢!</div>
     <div class="ov-desc" id="ove-desc"></div>
-    <button class="btn btn-cyan" onclick="hostCloseEvent()">המשך ▶</button>
+    <button class="btn btn-cyan" onclick="hostCloseEvent()">×”×ž×©×š â–¶</button>
   </div>
 </div>
 
-<!-- ══ HOST: QUESTION OVERLAY ══ -->
+<!-- â•â• HOST: QUESTION OVERLAY â•â• -->
 <div id="ov-question" class="overlay">
   <div class="ov-card" style="max-width:500px">
-    <div class="q-category" id="ovq-cat">❓ שאלה</div>
+    <div class="q-category" id="ovq-cat">â“ ×©××œ×”</div>
     <div class="q-timer" id="ovq-timer">15</div>
     <div class="q-text" id="ovq-text"></div>
     <div class="q-answers-grid" id="ovq-answers"></div>
     <div class="answerers-line" id="ovq-answerers"></div>
-    <button class="btn btn-cyan" id="ovq-next" onclick="hostCloseQuestion()" style="display:none">המשך ▶</button>
+    <button class="btn btn-cyan" id="ovq-next" onclick="hostCloseQuestion()" style="display:none">×”×ž×©×š â–¶</button>
   </div>
 </div>
 
-<!-- ══ HOST: SPEED ROUND OVERLAY ══ -->
+<!-- â•â• HOST: SPEED ROUND OVERLAY â•â• -->
 <div id="ov-speed" class="overlay">
   <div class="ov-card" style="max-width:500px">
-    <div style="color:var(--purple);font-size:.8rem;font-weight:700;margin-bottom:6px">⚡ ספיד ראונד</div>
+    <div style="color:var(--purple);font-size:.8rem;font-weight:700;margin-bottom:6px">âš¡ ×¡×¤×™×“ ×¨××•× ×“</div>
     <div class="q-timer" id="ovs-timer">10</div>
-    <div style="font-size:.8rem;color:rgba(255,255,255,.4);margin-bottom:8px">שאלה <span id="ovs-qnum">1</span>/3</div>
+    <div style="font-size:.8rem;color:rgba(255,255,255,.4);margin-bottom:8px">×©××œ×” <span id="ovs-qnum">1</span>/3</div>
     <div class="q-text" id="ovs-text"></div>
     <div class="q-answers-grid" id="ovs-answers"></div>
     <div class="answerers-line" id="ovs-answerers"></div>
-    <button class="btn btn-cyan" id="ovs-next" onclick="hostNextSpeedQ()" style="display:none">הבא ▶</button>
+    <button class="btn btn-cyan" id="ovs-next" onclick="hostNextSpeedQ()" style="display:none">×”×‘× â–¶</button>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // CONSTANTS
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const TILE_COUNT = 30;
-const TOKENS = ['🚢','⛵','🛥️','🚤'];
+const TOKENS = ['ðŸš¢','â›µ','ðŸ›¥ï¸','ðŸš¤'];
 const COLORS = ['#4da6ff','#ff6b6b','#ffd700','#00e5a0'];
 
 const TILE_TYPES = [
@@ -387,7 +388,7 @@ const TILE_TYPES = [
   'storm','treasure','question','speed','storm','finish'
 ];
 
-const TILE_EMOJIS = {start:'🏁',question:'❓',storm:'⚡',treasure:'🎁',whirlpool:'🌀',port:'🏝️',speed:'🎮',finish:'🏆'};
+const TILE_EMOJIS = {start:'ðŸ',question:'â“',storm:'âš¡',treasure:'ðŸŽ',whirlpool:'ðŸŒ€',port:'ðŸï¸',speed:'ðŸŽ®',finish:'ðŸ†'};
 const TILE_COLORS = {start:'#1a3a6a',question:'#0d3a50',storm:'#4a1a1a',treasure:'#4a3800',whirlpool:'#1a3a4a',port:'#0a3a20',speed:'#2d0d6a',finish:'#5a4000'};
 
 const TURN_QUESTION_TIME = 25;
@@ -398,29 +399,29 @@ const POST_MOVE_DELAY = 1200;
 const WRONG_ANSWER_DELAY = 2200;
 
 const TRIVIA = [
-  // ── הבנה ──
-  {q:'📋 מה ילדים בכפר המנותקים נדרשים לעשות עם הטלפון כשמגיעים למחנה?',a:['להשתמש בו רק בלילה','לשמור אותו במשרד ולהיפרד ממנו לכל השהות','להחזיק אותו אבל לא לגלוש','לכבות אותו אבל להחזיק'],c:1,cat:'הבנה'},
-  {q:'📋 מה ילדים עושים בכפר המנותקים במקום טלפון?',a:['ישנים כל היום','משחקים, יוצרים תוכן ידני ומתחברים פנים אל פנים','צופים בטלוויזיה','לומדים לתכנת מחשבים'],c:1,cat:'הבנה'},
-  {q:'📋 מה הרוב המכריע של ילדים אמרו אחרי שחזרו מהמחנה?',a:['שהתאכזבו מהחוויה','שהתגעגעו לטלפון בכל רגע','שהתרגלו לחיים בלי טלפון והרגישו טוב יותר','שלא ירצו לחזור שוב'],c:2,cat:'הבנה'},
-  {q:'📋 מדוע הורים שולחים ילדים לכפר המנותקים?',a:['כי המחנה זול יותר','כי הם רוצים לשחרר ילדיהם מהתמכרות למסכים','כי אין ברירה אחרת בקיץ','כי המחנה מיועד לילדים עם בעיות'],c:1,cat:'הבנה'},
-  {q:'📋 מה קורה לילדים בתחילת השהות כשנפרדים מהטלפון?',a:['מרגישים שמחים מיד','רובם מתנגדים ומרגישים חרדה וחוסר נוחות','שוכחים לגמרי את הטלפון','מבקשים לחזור הביתה מיד'],c:1,cat:'הבנה'},
-  // ── חשיבה ──
-  {q:'💡 מה מחקר אומר על שימוש מופרז בטלפון אצל בני נוער?',a:['אין שום מידע מחקרי','מחקר מראה שהוא משפר ריכוז וציונים','מחקרים מראים קשר לחרדה, דיכאון וקשיי שינה','הטלפון עוזר לבני נוער ללמוד מהר יותר'],c:2,cat:'חשיבה'},
-  {q:'💡 מה היתרון הגדול של יצירת קשרים חברתיים ללא טכנולוגיה?',a:['אפשר לשמור על מידע אישי יותר בצורה בטוחה','השיחות עמוקות יותר ויש קשב מלא ללא הסחות דעת','קל יותר להכיר אנשים חדשים דרך רשתות חברתיות','אין שום הבדל בין קשר עם וללא טכנולוגיה'],c:1,cat:'חשיבה'},
-  {q:'💡 מה הסיבה שקשה לבני נוער להיפרד מהטלפון?',a:['הטלפון הוא צורך פיזי כמו אוכל','הם ממש לא אוהבים לדבר עם אנשים','הטלפון מספק גירוי מהיר ומתמיד שהמוח מתרגל אליו ומצפה לו','הם רוצים תמיד לעדכן את ההורים'],c:2,cat:'חשיבה'},
-  {q:'💡 מה ההבדל בין "שימוש בטלפון" לבין "התמכרות לטלפון"?',a:['אין שום הבדל','התמכרות היא שימוש יותר מפעם ביום','התמכרות היא כשאי אפשר לשלוט בשימוש, יש חרדה בלעדיו ומזניחים דברים חשובים','שימוש בטלפון הוא תמיד בעיה'],c:2,cat:'חשיבה'},
-  {q:'💡 מה קיים בחוויה של כפר המנותקים שמשנה את יחסם של ילדים לטלפון?',a:['הם לומדים שהטלפון רע לחלוטין','הם חווים שאפשר ליהנות וליצור תוכן גם בלי מסכים','הם מבינים שהטלפון הכרחי לחיים','הם לומדים לתכנת אפליקציות חדשות'],c:1,cat:'חשיבה'},
-  // ── דילמות ──
-  {q:'🤔 חבר מזמין אותך לכפר המנותקים לשבוע — תסכים להיפרד מהטלפון?',a:['לא בחיים, אי אפשר בלי טלפון','כן, אם כולם עושים את זה ביחד אני מסכים לנסות','רק אם אוכל להחזיק את הטלפון בלי להשתמש','לא, כי ההורים לא יאשרו'],c:1,cat:'דילמה'},
-  {q:'🤔 מה הכי קשה לשחרר אם תהיה ללא טלפון שבוע שלם?',a:['גישה למפות וניווט','הרצון לדעת מה קורה ברשתות ולעדכן חברים','היכולת לצלם תמונות','גישה למוזיקה'],c:1,cat:'דילמה'},
-  {q:'🤔 מה עדיף שיהיה במחנה קיץ?',a:['טלפון חופשי לכולם בכל עת','טלפון רק בשעות מוגדרות ביום','ללא טלפון בכלל לכל השהות','כל אחד מחליט לבד'],c:2,cat:'דילמה'},
-  {q:'🤔 את מי הכי תתגעגע אליו אחרי שבוע ללא טלפון?',a:['לאינסטגרם ולטיקטוק','לחברים שרק מתקשרים בוואטסאפ ולא פנים אל פנים','לחברים שפוגשים בחיים האמיתיים ממילא','לא תתגעגע לשום דבר'],c:1,cat:'דילמה'},
-  {q:'🤔 לאחר שבוע בכפר, חבר שואל "האם כדאי לוותר על הטלפון?" — מה תענה?',a:['בשום אופן לא, זה היה נורא','כן, שווה לנסות — למדתי להתרגל ולגלות שיש חוויות שקיימות רק בלי מסך','לא יודע, תלוי בבן אדם','כן, אבל רק לילדים קטנים'],c:1,cat:'דילמה'},
+  // â”€â”€ ×”×‘× ×” â”€â”€
+  {q:'ðŸ“‹ ×ž×” ×™×œ×“×™× ×‘×›×¤×¨ ×”×ž× ×•×ª×§×™× × ×“×¨×©×™× ×œ×¢×©×•×ª ×¢× ×”×˜×œ×¤×•×Ÿ ×›×©×ž×’×™×¢×™× ×œ×ž×—× ×”?',a:['×œ×”×©×ª×ž×© ×‘×• ×¨×§ ×‘×œ×™×œ×”','×œ×©×ž×•×¨ ××•×ª×• ×‘×ž×©×¨×“ ×•×œ×”×™×¤×¨×“ ×ž×ž× ×• ×œ×›×œ ×”×©×”×•×ª','×œ×”×—×–×™×§ ××•×ª×• ××‘×œ ×œ× ×œ×’×œ×•×©','×œ×›×‘×•×ª ××•×ª×• ××‘×œ ×œ×”×—×–×™×§'],c:1,cat:'×”×‘× ×”'},
+  {q:'ðŸ“‹ ×ž×” ×™×œ×“×™× ×¢×•×©×™× ×‘×›×¤×¨ ×”×ž× ×•×ª×§×™× ×‘×ž×§×•× ×˜×œ×¤×•×Ÿ?',a:['×™×©× ×™× ×›×œ ×”×™×•×','×ž×©×—×§×™×, ×™×•×¦×¨×™× ×ª×•×›×Ÿ ×™×“× ×™ ×•×ž×ª×—×‘×¨×™× ×¤× ×™× ××œ ×¤× ×™×','×¦×•×¤×™× ×‘×˜×œ×•×•×™×–×™×”','×œ×•×ž×“×™× ×œ×ª×›× ×ª ×ž×—×©×‘×™×'],c:1,cat:'×”×‘× ×”'},
+  {q:'ðŸ“‹ ×ž×” ×”×¨×•×‘ ×”×ž×›×¨×™×¢ ×©×œ ×™×œ×“×™× ××ž×¨×• ××—×¨×™ ×©×—×–×¨×• ×ž×”×ž×—× ×”?',a:['×©×”×ª××›×–×‘×• ×ž×”×—×•×•×™×”','×©×”×ª×’×¢×’×¢×• ×œ×˜×œ×¤×•×Ÿ ×‘×›×œ ×¨×’×¢','×©×”×ª×¨×’×œ×• ×œ×—×™×™× ×‘×œ×™ ×˜×œ×¤×•×Ÿ ×•×”×¨×’×™×©×• ×˜×•×‘ ×™×•×ª×¨','×©×œ× ×™×¨×¦×• ×œ×—×–×•×¨ ×©×•×‘'],c:2,cat:'×”×‘× ×”'},
+  {q:'ðŸ“‹ ×ž×“×•×¢ ×”×•×¨×™× ×©×•×œ×—×™× ×™×œ×“×™× ×œ×›×¤×¨ ×”×ž× ×•×ª×§×™×?',a:['×›×™ ×”×ž×—× ×” ×–×•×œ ×™×•×ª×¨','×›×™ ×”× ×¨×•×¦×™× ×œ×©×—×¨×¨ ×™×œ×“×™×”× ×ž×”×ª×ž×›×¨×•×ª ×œ×ž×¡×›×™×','×›×™ ××™×Ÿ ×‘×¨×™×¨×” ××—×¨×ª ×‘×§×™×¥','×›×™ ×”×ž×—× ×” ×ž×™×•×¢×“ ×œ×™×œ×“×™× ×¢× ×‘×¢×™×•×ª'],c:1,cat:'×”×‘× ×”'},
+  {q:'ðŸ“‹ ×ž×” ×§×•×¨×” ×œ×™×œ×“×™× ×‘×ª×—×™×œ×ª ×”×©×”×•×ª ×›×©× ×¤×¨×“×™× ×ž×”×˜×œ×¤×•×Ÿ?',a:['×ž×¨×’×™×©×™× ×©×ž×—×™× ×ž×™×“','×¨×•×‘× ×ž×ª× ×’×“×™× ×•×ž×¨×’×™×©×™× ×—×¨×“×” ×•×—×•×¡×¨ × ×•×—×•×ª','×©×•×›×—×™× ×œ×’×ž×¨×™ ××ª ×”×˜×œ×¤×•×Ÿ','×ž×‘×§×©×™× ×œ×—×–×•×¨ ×”×‘×™×ª×” ×ž×™×“'],c:1,cat:'×”×‘× ×”'},
+  // â”€â”€ ×—×©×™×‘×” â”€â”€
+  {q:'ðŸ’¡ ×ž×” ×ž×—×§×¨ ××•×ž×¨ ×¢×œ ×©×™×ž×•×© ×ž×•×¤×¨×– ×‘×˜×œ×¤×•×Ÿ ××¦×œ ×‘× ×™ × ×•×¢×¨?',a:['××™×Ÿ ×©×•× ×ž×™×“×¢ ×ž×—×§×¨×™','×ž×—×§×¨ ×ž×¨××” ×©×”×•× ×ž×©×¤×¨ ×¨×™×›×•×– ×•×¦×™×•× ×™×','×ž×—×§×¨×™× ×ž×¨××™× ×§×©×¨ ×œ×—×¨×“×”, ×“×™×›××•×Ÿ ×•×§×©×™×™ ×©×™× ×”','×”×˜×œ×¤×•×Ÿ ×¢×•×–×¨ ×œ×‘× ×™ × ×•×¢×¨ ×œ×œ×ž×•×“ ×ž×”×¨ ×™×•×ª×¨'],c:2,cat:'×—×©×™×‘×”'},
+  {q:'ðŸ’¡ ×ž×” ×”×™×ª×¨×•×Ÿ ×”×’×“×•×œ ×©×œ ×™×¦×™×¨×ª ×§×©×¨×™× ×—×‘×¨×ª×™×™× ×œ×œ× ×˜×›× ×•×œ×•×’×™×”?',a:['××¤×©×¨ ×œ×©×ž×•×¨ ×¢×œ ×ž×™×“×¢ ××™×©×™ ×™×•×ª×¨ ×‘×¦×•×¨×” ×‘×˜×•×—×”','×”×©×™×—×•×ª ×¢×ž×•×§×•×ª ×™×•×ª×¨ ×•×™×© ×§×©×‘ ×ž×œ× ×œ×œ× ×”×¡×—×•×ª ×“×¢×ª','×§×œ ×™×•×ª×¨ ×œ×”×›×™×¨ ×× ×©×™× ×—×“×©×™× ×“×¨×š ×¨×©×ª×•×ª ×—×‘×¨×ª×™×•×ª','××™×Ÿ ×©×•× ×”×‘×“×œ ×‘×™×Ÿ ×§×©×¨ ×¢× ×•×œ×œ× ×˜×›× ×•×œ×•×’×™×”'],c:1,cat:'×—×©×™×‘×”'},
+  {q:'ðŸ’¡ ×ž×” ×”×¡×™×‘×” ×©×§×©×” ×œ×‘× ×™ × ×•×¢×¨ ×œ×”×™×¤×¨×“ ×ž×”×˜×œ×¤×•×Ÿ?',a:['×”×˜×œ×¤×•×Ÿ ×”×•× ×¦×•×¨×š ×¤×™×–×™ ×›×ž×• ××•×›×œ','×”× ×ž×ž×© ×œ× ××•×”×‘×™× ×œ×“×‘×¨ ×¢× ×× ×©×™×','×”×˜×œ×¤×•×Ÿ ×ž×¡×¤×§ ×’×™×¨×•×™ ×ž×”×™×¨ ×•×ž×ª×ž×™×“ ×©×”×ž×•×— ×ž×ª×¨×’×œ ××œ×™×• ×•×ž×¦×¤×” ×œ×•','×”× ×¨×•×¦×™× ×ª×ž×™×“ ×œ×¢×“×›×Ÿ ××ª ×”×”×•×¨×™×'],c:2,cat:'×—×©×™×‘×”'},
+  {q:'ðŸ’¡ ×ž×” ×”×”×‘×“×œ ×‘×™×Ÿ "×©×™×ž×•×© ×‘×˜×œ×¤×•×Ÿ" ×œ×‘×™×Ÿ "×”×ª×ž×›×¨×•×ª ×œ×˜×œ×¤×•×Ÿ"?',a:['××™×Ÿ ×©×•× ×”×‘×“×œ','×”×ª×ž×›×¨×•×ª ×”×™× ×©×™×ž×•×© ×™×•×ª×¨ ×ž×¤×¢× ×‘×™×•×','×”×ª×ž×›×¨×•×ª ×”×™× ×›×©××™ ××¤×©×¨ ×œ×©×œ×•×˜ ×‘×©×™×ž×•×©, ×™×© ×—×¨×“×” ×‘×œ×¢×“×™×• ×•×ž×–× ×™×—×™× ×“×‘×¨×™× ×—×©×•×‘×™×','×©×™×ž×•×© ×‘×˜×œ×¤×•×Ÿ ×”×•× ×ª×ž×™×“ ×‘×¢×™×”'],c:2,cat:'×—×©×™×‘×”'},
+  {q:'ðŸ’¡ ×ž×” ×§×™×™× ×‘×—×•×•×™×” ×©×œ ×›×¤×¨ ×”×ž× ×•×ª×§×™× ×©×ž×©× ×” ××ª ×™×—×¡× ×©×œ ×™×œ×“×™× ×œ×˜×œ×¤×•×Ÿ?',a:['×”× ×œ×•×ž×“×™× ×©×”×˜×œ×¤×•×Ÿ ×¨×¢ ×œ×—×œ×•×˜×™×Ÿ','×”× ×—×•×•×™× ×©××¤×©×¨ ×œ×™×”× ×•×ª ×•×œ×™×¦×•×¨ ×ª×•×›×Ÿ ×’× ×‘×œ×™ ×ž×¡×›×™×','×”× ×ž×‘×™× ×™× ×©×”×˜×œ×¤×•×Ÿ ×”×›×¨×—×™ ×œ×—×™×™×','×”× ×œ×•×ž×“×™× ×œ×ª×›× ×ª ××¤×œ×™×§×¦×™×•×ª ×—×“×©×•×ª'],c:1,cat:'×—×©×™×‘×”'},
+  // â”€â”€ ×“×™×œ×ž×•×ª â”€â”€
+  {q:'ðŸ¤” ×—×‘×¨ ×ž×–×ž×™×Ÿ ××•×ª×š ×œ×›×¤×¨ ×”×ž× ×•×ª×§×™× ×œ×©×‘×•×¢ â€” ×ª×¡×›×™× ×œ×”×™×¤×¨×“ ×ž×”×˜×œ×¤×•×Ÿ?',a:['×œ× ×‘×—×™×™×, ××™ ××¤×©×¨ ×‘×œ×™ ×˜×œ×¤×•×Ÿ','×›×Ÿ, ×× ×›×•×œ× ×¢×•×©×™× ××ª ×–×” ×‘×™×—×“ ×× ×™ ×ž×¡×›×™× ×œ× ×¡×•×ª','×¨×§ ×× ××•×›×œ ×œ×”×—×–×™×§ ××ª ×”×˜×œ×¤×•×Ÿ ×‘×œ×™ ×œ×”×©×ª×ž×©','×œ×, ×›×™ ×”×”×•×¨×™× ×œ× ×™××©×¨×•'],c:1,cat:'×“×™×œ×ž×”'},
+  {q:'ðŸ¤” ×ž×” ×”×›×™ ×§×©×” ×œ×©×—×¨×¨ ×× ×ª×”×™×” ×œ×œ× ×˜×œ×¤×•×Ÿ ×©×‘×•×¢ ×©×œ×?',a:['×’×™×©×” ×œ×ž×¤×•×ª ×•× ×™×•×•×˜','×”×¨×¦×•×Ÿ ×œ×“×¢×ª ×ž×” ×§×•×¨×” ×‘×¨×©×ª×•×ª ×•×œ×¢×“×›×Ÿ ×—×‘×¨×™×','×”×™×›×•×œ×ª ×œ×¦×œ× ×ª×ž×•× ×•×ª','×’×™×©×” ×œ×ž×•×–×™×§×”'],c:1,cat:'×“×™×œ×ž×”'},
+  {q:'ðŸ¤” ×ž×” ×¢×“×™×£ ×©×™×”×™×” ×‘×ž×—× ×” ×§×™×¥?',a:['×˜×œ×¤×•×Ÿ ×—×•×¤×©×™ ×œ×›×•×œ× ×‘×›×œ ×¢×ª','×˜×œ×¤×•×Ÿ ×¨×§ ×‘×©×¢×•×ª ×ž×•×’×“×¨×•×ª ×‘×™×•×','×œ×œ× ×˜×œ×¤×•×Ÿ ×‘×›×œ×œ ×œ×›×œ ×”×©×”×•×ª','×›×œ ××—×“ ×ž×—×œ×™×˜ ×œ×‘×“'],c:2,cat:'×“×™×œ×ž×”'},
+  {q:'ðŸ¤” ××ª ×ž×™ ×”×›×™ ×ª×ª×’×¢×’×¢ ××œ×™×• ××—×¨×™ ×©×‘×•×¢ ×œ×œ× ×˜×œ×¤×•×Ÿ?',a:['×œ××™× ×¡×˜×’×¨× ×•×œ×˜×™×§×˜×•×§','×œ×—×‘×¨×™× ×©×¨×§ ×ž×ª×§×©×¨×™× ×‘×•×•××˜×¡××¤ ×•×œ× ×¤× ×™× ××œ ×¤× ×™×','×œ×—×‘×¨×™× ×©×¤×•×’×©×™× ×‘×—×™×™× ×”××ž×™×ª×™×™× ×ž×ž×™×œ×','×œ× ×ª×ª×’×¢×’×¢ ×œ×©×•× ×“×‘×¨'],c:1,cat:'×“×™×œ×ž×”'},
+  {q:'ðŸ¤” ×œ××—×¨ ×©×‘×•×¢ ×‘×›×¤×¨, ×—×‘×¨ ×©×•××œ "×”×× ×›×“××™ ×œ×•×•×ª×¨ ×¢×œ ×”×˜×œ×¤×•×Ÿ?" â€” ×ž×” ×ª×¢× ×”?',a:['×‘×©×•× ××•×¤×Ÿ ×œ×, ×–×” ×”×™×” × ×•×¨×','×›×Ÿ, ×©×•×•×” ×œ× ×¡×•×ª â€” ×œ×ž×“×ª×™ ×œ×”×ª×¨×’×œ ×•×œ×’×œ×•×ª ×©×™×© ×—×•×•×™×•×ª ×©×§×™×™×ž×•×ª ×¨×§ ×‘×œ×™ ×ž×¡×š','×œ× ×™×•×“×¢, ×ª×œ×•×™ ×‘×‘×Ÿ ××“×','×›×Ÿ, ××‘×œ ×¨×§ ×œ×™×œ×“×™× ×§×˜× ×™×'],c:1,cat:'×“×™×œ×ž×”'},
 ];
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // AUDIO
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const AC = new (window.AudioContext || window.webkitAudioContext)();
 document.addEventListener('click',()=>{if(AC.state==='suspended')AC.resume();},{once:true});
 
@@ -444,21 +445,19 @@ const sfx={
   tick:()=>tone(880,.06,'sine',.1),
 };
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // SCREEN NAV
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.add('off'));
   document.getElementById(id).classList.remove('off');
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // PEER STATE
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 let myRole = 'none'; // 'host' | 'player'
 let myClientId = null;
-let hostConn = null;         // player → host connection
-let playerConns = {};        // host: peerId → DataConnection
 let roomCode = '';
 let db = null;
 let roomRef = null;
@@ -477,12 +476,20 @@ function firebaseReady(){
   return FIREBASE_CONFIG.apiKey && !FIREBASE_CONFIG.apiKey.includes('PASTE_');
 }
 
-function initFirebase(){
+function showFirebaseError(message){
+  const joinErr = document.getElementById('join-error');
+  const hudStatus = document.getElementById('hud-status');
+  if(joinErr) joinErr.textContent = message;
+  if(hudStatus) hudStatus.textContent = message;
+  console.error(message);
+}
+
+async function initFirebase(){
+  await window.firebaseModuleReady;
   if(!firebaseReady()){
     alert('Firebase is not configured yet. Paste your Firebase web config into FIREBASE_CONFIG in index.html.');
     throw new Error('Missing Firebase config');
   }
-  if(!window.FirebaseMod) throw new Error('Firebase module is still loading. Try again in a moment.');
   if(!window.firebaseAppMod) window.firebaseAppMod = window.FirebaseMod.initializeApp(FIREBASE_CONFIG);
   db = window.FirebaseMod.getFirestore(window.firebaseAppMod, 'default');
 }
@@ -525,7 +532,7 @@ function listenForHostMessages(){
       window.FirebaseMod.deleteDoc(change.doc.ref);
       if(data) onHostData(data);
     });
-  });
+  }, err=>showFirebaseError('Firebase host listener failed: ' + err.message));
   roomUnsubs.push(unsub);
 }
 
@@ -535,38 +542,12 @@ function sendToHost(data){
     ...data,
     peerId: myClientId,
     ts: window.FirebaseMod.serverTimestamp()
-  });
+  }).catch(err=>showFirebaseError('Firebase send-to-host failed: ' + err.message));
 }
 
-/*
-    if(!data || !data.peerId) return;
-    const {peerId, ...msg} = data;
-    onPlayerData(peerId, msg);
-  });
-}
-
-function listenForHostMessages(){
-  roomRef.child('messages').child(myClientId).off();
-  roomRef.child('messages').child(myClientId).on('child_added', snap=>{
-    const data = snap.val();
-    snap.ref.remove();
-    if(data) onHostData(data);
-  });
-}
-
-function sendToHost(data){
-  if(!roomRef || !myClientId) return;
-  roomRef.child('inbox').push({
-    ...data,
-    peerId: myClientId,
-    ts: firebase.database.ServerValue.TIMESTAMP
-  });
-}
-*/
-
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // GAME STATE (authoritative on host)
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 let G = {
   players: [],  // {id,name,token,color,position,score,connected}
   currentIdx: 0,
@@ -577,19 +558,19 @@ let G = {
   speedQIdx: 0,
   speedQuestions: [],
   currentQ: null,
-  answers: {},   // peerId → {choice, time}
+  answers: {},   // peerId â†’ {choice, time}
   firstCorrect: null,
   rollGate: false,
   rollGateCorrect: false,
   rollUnlockedFor: null,
 };
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // HOST SETUP
-// ═══════════════════════════════════════════
-function goHost(){
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+async function goHost(){
   sfx.click();
-  initFirebase();
+  await initFirebase();
   show('host-lobby');
   const code = randomCode();
   roomCode = code;
@@ -598,36 +579,20 @@ function goHost(){
   document.getElementById('hud-code').textContent = code;
 
   const url = location.href.split('#')[0];
-  document.getElementById('join-url-display').textContent = url + ' → קוד: ' + code;
+  document.getElementById('join-url-display').textContent = url + ' â†’ ×§×•×“: ' + code;
 
   roomRef = code;
-  window.FirebaseMod.setDoc(window.FirebaseMod.doc(db, 'rooms', code), {
+  await window.FirebaseMod.setDoc(window.FirebaseMod.doc(db, 'rooms', code), {
     createdAt: window.FirebaseMod.serverTimestamp(),
     status:'lobby'
-  });
+  }).catch(err=>{ showFirebaseError('Firebase room create failed: ' + err.message); throw err; });
   listenForPlayerMessages();
-  /*
-  myPeer.on('error', e=>{
-    if(e.type==='unavailable-id'){
-      // Code taken — try new one
-      goHost();
-    }
-  });
-  */
 
   G.triviaPool = shuffle([...TRIVIA]);
   G.speedPool = shuffle([...TRIVIA]);
   G.players = [];
 }
 
-function onPlayerConnect(conn){
-  conn.on('open',()=>{
-    console.log('Player connected:', conn.peer);
-    conn.on('data', d=>onPlayerData(conn.peer, d));
-    conn.on('close', ()=>onPlayerDisconnect(conn.peer));
-  });
-  conn.on('error', e=>console.warn('conn error',e));
-}
 
 function onPlayerData(peerId, data){
   if(data.type === 'join'){
@@ -671,10 +636,6 @@ function onPlayerData(peerId, data){
   }
 }
 
-function findConn(peerId){
-  const conns = myPeer.connections[peerId];
-  return conns && conns.length ? conns[0] : null;
-}
 
 function onPlayerDisconnect(peerId){
   const p = G.players.find(x=>x.id===peerId);
@@ -688,7 +649,7 @@ function sendToPlayer(peerId, data){
   window.FirebaseMod.addDoc(window.FirebaseMod.collection(db, 'rooms', roomRef, 'messages', peerId, 'items'), {
     ...data,
     ts: window.FirebaseMod.serverTimestamp()
-  });
+  }).catch(err=>showFirebaseError('Firebase send-to-player failed: ' + err.message));
 }
 
 function broadcast(data){
@@ -699,21 +660,21 @@ function updateLobbyUI(){
   const list = document.getElementById('lobby-player-list');
   if(!list) return;
   if(G.players.length === 0){
-    list.innerHTML='<div style="text-align:center;color:rgba(255,255,255,.3);font-size:.85rem;padding:10px">ממתין לשחקנים<span class="connecting-dots"></span></div>';
+    list.innerHTML='<div style="text-align:center;color:rgba(255,255,255,.3);font-size:.85rem;padding:10px">×ž×ž×ª×™×Ÿ ×œ×©×—×§× ×™×<span class="connecting-dots"></span></div>';
   } else {
     list.innerHTML = G.players.map((p,i)=>`
       <div class="player-join-item">
         <div class="pji-token">${p.token}</div>
         <div class="pji-name" style="color:${p.color}">${p.name}</div>
-        <div class="pji-badge">מחובר ✓</div>
+        <div class="pji-badge">×ž×—×•×‘×¨ âœ“</div>
       </div>`).join('');
   }
   document.getElementById('start-game-btn').disabled = G.players.length < 1;
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // HOST: START GAME
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function hostStartGame(){
   sfx.click();
   G.phase = 'starting';
@@ -738,20 +699,20 @@ function hostSetTurn(){
   document.getElementById('hud-token').textContent = p.token;
   document.getElementById('hud-name').textContent = p.name;
   document.getElementById('hud-name').style.color = p.color;
-  document.getElementById('hud-status').textContent = `${p.name} עונה על שאלת כניסה לגלגול...`;
+  document.getElementById('hud-status').textContent = `${p.name} ×¢×•× ×” ×¢×œ ×©××œ×ª ×›× ×™×¡×” ×œ×’×œ×’×•×œ...`;
   renderHostScores();
   broadcast({type:'turnQuestion', currentIdx: G.currentIdx, players: G.players});
   hostStartQuestion({rollGate:true});
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // HOST: DICE + MOVEMENT
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function hostDoRoll(){
   const val = Math.floor(Math.random()*6)+1;
   sfx.dice();
   broadcast({type:'rolled', dice: val, playerIdx: G.currentIdx});
-  document.getElementById('hud-status').textContent = `🎲 ${val}`;
+  document.getElementById('hud-status').textContent = `ðŸŽ² ${val}`;
   setTimeout(()=>hostMovePlayer(val), POST_ROLL_DELAY);
 }
 
@@ -790,15 +751,15 @@ function hostLandTile(){
     case 'treasure': hostTreasure(); break;
     case 'whirlpool':hostWhirlpool(); break;
     case 'port':
-      showHostEvent('🏝️','תחנת נמל!',`${p.name} עוגן בנמל לנוח. המשיכו!`);
+      showHostEvent('ðŸï¸','×ª×—× ×ª × ×ž×œ!',`${p.name} ×¢×•×’×Ÿ ×‘× ×ž×œ ×œ× ×•×—. ×”×ž×©×™×›×•!`);
       break;
     default: hostNextTurn();
   }
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // HOST: EVENTS
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 let _eventCb = null;
 function showHostEvent(emoji,title,desc,cb){
   document.getElementById('ove-emoji').textContent=emoji;
@@ -822,10 +783,10 @@ function hostStorm(){
     p.position = Math.max(0, p.position-2);
     renderTokens(); renderHostScores();
     broadcast({type:'moved',players:G.players});
-    showHostEvent('⚡','סופה!',`${p.name} נתקע בסופה! אחורה 2 שדות. 😱`);
+    showHostEvent('âš¡','×¡×•×¤×”!',`${p.name} × ×ª×§×¢ ×‘×¡×•×¤×”! ××—×•×¨×” 2 ×©×“×•×ª. ðŸ˜±`);
   } else if(r===1){
     p._skipTurn = true;
-    showHostEvent('⚡','סופה!',`${p.name} מחכה שהסופה תעבור — מדלג תור! 😰`);
+    showHostEvent('âš¡','×¡×•×¤×”!',`${p.name} ×ž×—×›×” ×©×”×¡×•×¤×” ×ª×¢×‘×•×¨ â€” ×ž×“×œ×’ ×ª×•×¨! ðŸ˜°`);
   } else {
     const others = G.players.filter((_,i)=>i!==G.currentIdx && _.connected);
     if(others.length){
@@ -836,12 +797,12 @@ function hostStorm(){
       G.players[ti].position = tmp;
       renderTokens(); renderHostScores();
       broadcast({type:'moved',players:G.players});
-      showHostEvent('⚡','סופה!',`הסופה מחליפה בין ${p.name} ל${tgt.name}! 🌪️`);
+      showHostEvent('âš¡','×¡×•×¤×”!',`×”×¡×•×¤×” ×ž×—×œ×™×¤×” ×‘×™×Ÿ ${p.name} ×œ${tgt.name}! ðŸŒªï¸`);
     } else {
       p.position = Math.max(0,p.position-1);
       renderTokens(); renderHostScores();
       broadcast({type:'moved',players:G.players});
-      showHostEvent('⚡','סופה!','אחורה שדה אחד!');
+      showHostEvent('âš¡','×¡×•×¤×”!','××—×•×¨×” ×©×“×” ××—×“!');
     }
   }
 }
@@ -854,9 +815,9 @@ function hostTreasure(){
   renderTokens(); renderHostScores();
   broadcast({type:'moved',players:G.players});
   if(p.position >= TILE_COUNT-1){
-    showHostEvent('🎁','אוצר!',`${p.name} מצא אוצר ועשה ${bonus} צעדים — הגיע לסוף!`,()=>hostWin(G.currentIdx));
+    showHostEvent('ðŸŽ','××•×¦×¨!',`${p.name} ×ž×¦× ××•×¦×¨ ×•×¢×©×” ${bonus} ×¦×¢×“×™× â€” ×”×’×™×¢ ×œ×¡×•×£!`,()=>hostWin(G.currentIdx));
   } else {
-    showHostEvent('🎁','אוצר!',`${p.name} מצא אוצר! קדימה ${bonus} שדות! 💰`);
+    showHostEvent('ðŸŽ','××•×¦×¨!',`${p.name} ×ž×¦× ××•×¦×¨! ×§×“×™×ž×” ${bonus} ×©×“×•×ª! ðŸ’°`);
   }
 }
 
@@ -866,7 +827,7 @@ function hostWhirlpool(){
   p.position = newPos;
   renderTokens(); renderHostScores();
   broadcast({type:'moved',players:G.players});
-  showHostEvent('🌀','מערבולת!',`${p.name} נסחף למערבולת! מתעורר בשדה ${newPos+1}. 🌀`);
+  showHostEvent('ðŸŒ€','×ž×¢×¨×‘×•×œ×ª!',`${p.name} × ×¡×—×£ ×œ×ž×¢×¨×‘×•×œ×ª! ×ž×ª×¢×•×¨×¨ ×‘×©×“×” ${newPos+1}. ðŸŒ€`);
 }
 
 function hostDocksideRiddle(){
@@ -874,12 +835,12 @@ function hostDocksideRiddle(){
   p.score += 1;
   renderHostScores();
   broadcast({type:'moved',players:G.players});
-  showHostEvent('❓','חידת רציף!',`${p.name} הגיע לרציף החידות ומקבל נקודה על ניווט חכם. ממשיכים לתור הבא.`);
+  showHostEvent('â“','×—×™×“×ª ×¨×¦×™×£!',`${p.name} ×”×’×™×¢ ×œ×¨×¦×™×£ ×”×—×™×“×•×ª ×•×ž×§×‘×œ × ×§×•×“×” ×¢×œ × ×™×•×•×˜ ×—×›×. ×ž×ž×©×™×›×™× ×œ×ª×•×¨ ×”×‘×.`);
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // HOST: QUESTION
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 let _qTimer = null;
 let _qTimeLeft = 0;
 let _qRevealed = false;
@@ -901,15 +862,15 @@ function hostStartQuestion(opts = {}){
 
   const activePlayer = G.players[G.currentIdx];
   document.getElementById('ovq-cat').textContent = G.rollGate
-    ? `⚓ שאלת הפלגה - ${activePlayer.name} מגלגל רק אם הוא עונה נכון`
-    : '❓ ' + q.cat;
+    ? `âš“ ×©××œ×ª ×”×¤×œ×’×” - ${activePlayer.name} ×ž×’×œ×’×œ ×¨×§ ×× ×”×•× ×¢×•× ×” × ×›×•×Ÿ`
+    : 'â“ ' + q.cat;
   document.getElementById('ovq-timer').textContent = timeLimit;
   document.getElementById('ovq-timer').classList.remove('urgent');
   document.getElementById('ovq-text').textContent = q.q;
   document.getElementById('ovq-answerers').textContent = '';
   document.getElementById('ovq-next').style.display = 'none';
 
-  const shapes = ['▲','◆','●','■'];
+  const shapes = ['â–²','â—†','â—','â– '];
   const shapeClasses = ['sh-red','sh-blue','sh-gold','sh-green'];
   document.getElementById('ovq-answers').innerHTML = q.a.map((a,i)=>`
     <div class="q-ans-host" id="ovq-ans-${i}">
@@ -950,7 +911,7 @@ function hostUpdateAnswerCount(){
   const total = G.rollGate ? 1 : G.players.filter(p=>p.connected).length;
   const elId = G.phase==='speed' ? 'ovs-answerers' : 'ovq-answerers';
   const el = document.getElementById(elId);
-  if(el) el.textContent = `${count}/${total} ענו`;
+  if(el) el.textContent = `${count}/${total} ×¢× ×•`;
 }
 
 function hostRevealQuestion(){
@@ -995,7 +956,7 @@ function hostRevealQuestion(){
 
   const line = document.getElementById('ovq-answerers');
   const correctNames = results.filter(r=>r.correct).map(r=>r.name);
-  if(line) line.textContent = correctNames.length ? `✅ צדקו: ${correctNames.join(', ')}` : '❌ אף אחד לא צדק';
+  if(line) line.textContent = correctNames.length ? `âœ… ×¦×“×§×•: ${correctNames.join(', ')}` : 'âŒ ××£ ××—×“ ×œ× ×¦×“×§';
 
   broadcast({type:'questionResult', correct:q.c, scores: G.players.map(p=>({id:p.id,score:p.score,position:p.position}))});
 
@@ -1016,11 +977,11 @@ function hostCloseQuestion(){
     if(canRoll){
       G.phase = 'roll';
       G.rollUnlockedFor = p.id;
-      document.getElementById('hud-status').textContent = `${p.name} ענה נכון ויכול לגלגל`;
+      document.getElementById('hud-status').textContent = `${p.name} ×¢× ×” × ×›×•×Ÿ ×•×™×›×•×œ ×œ×’×œ×’×œ`;
       broadcast({type:'yourTurn', currentIdx: G.currentIdx, players: G.players});
     } else {
       G.rollUnlockedFor = null;
-      document.getElementById('hud-status').textContent = `${p.name} טעה, לא מגלגל ונשאר במקום`;
+      document.getElementById('hud-status').textContent = `${p.name} ×˜×¢×”, ×œ× ×ž×’×œ×’×œ ×•× ×©××¨ ×‘×ž×§×•×`;
       broadcast({type:'moved', players:G.players});
       setTimeout(hostNextTurn, WRONG_ANSWER_DELAY);
     }
@@ -1035,9 +996,9 @@ function hostCloseQuestion(){
   }
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // HOST: SPEED ROUND (minigame replacement)
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function hostStartSpeed(){
   G.phase = 'speed';
   G.speedScores = {};
@@ -1048,7 +1009,7 @@ function hostStartSpeed(){
   }, G.triviaPool); // avoid duplicates
 
   broadcast({type:'speedRoundStart'});
-  showHostEvent('🎮','ספיד ראונד! ⚡','3 שאלות מהירות — הכי הרבה צדקו מקבלים 3 שדות קדימה!',()=>{
+  showHostEvent('ðŸŽ®','×¡×¤×™×“ ×¨××•× ×“! âš¡','3 ×©××œ×•×ª ×ž×”×™×¨×•×ª â€” ×”×›×™ ×”×¨×‘×” ×¦×“×§×• ×ž×§×‘×œ×™× 3 ×©×“×•×ª ×§×“×™×ž×”!',()=>{
     hostNextSpeedQ();
   });
 }
@@ -1076,7 +1037,7 @@ function hostNextSpeedQ(){
   document.getElementById('ovs-answerers').textContent = '';
   document.getElementById('ovs-next').style.display = 'none';
 
-  const shapes=['▲','◆','●','■'];
+  const shapes=['â–²','â—†','â—','â– '];
   const shapeClasses=['sh-red','sh-blue','sh-gold','sh-green'];
   document.getElementById('ovs-answers').innerHTML = q.a.map((a,i)=>`
     <div class="q-ans-host" id="ovs-ans-${i}">
@@ -1085,7 +1046,7 @@ function hostNextSpeedQ(){
     </div>`).join('');
 
   document.getElementById('ov-speed').classList.add('show');
-  broadcast({type:'question', q:q.q, a:q.a, cat:'ספיד ראונד', timeLimit, isSpeed:true});
+  broadcast({type:'question', q:q.q, a:q.a, cat:'×¡×¤×™×“ ×¨××•× ×“', timeLimit, isSpeed:true});
 
   clearInterval(_qTimer);
   _qTimer = setInterval(()=>{
@@ -1129,7 +1090,7 @@ function hostRevealSpeedQ(){
 
   const line = document.getElementById('ovs-answerers');
   const correctNames = results.filter(r=>r.correct).map(r=>G.players.find(p=>p.id===r.id)?.name).filter(Boolean);
-  if(line) line.textContent = correctNames.length ? `✅ ${correctNames.join(', ')}` : '❌ אף אחד';
+  if(line) line.textContent = correctNames.length ? `âœ… ${correctNames.join(', ')}` : 'âŒ ××£ ××—×“';
 
   broadcast({type:'questionResult', correct:q.c, scores:G.players.map(p=>({id:p.id,score:p.score,position:p.position})), speedScores:G.speedScores});
 
@@ -1153,19 +1114,19 @@ function hostSpeedRoundEnd(){
   renderTokens(); renderHostScores();
   broadcast({type:'moved',players:G.players});
 
-  const winnerNames = winners.map(w=>w.name).join(' ו');
+  const winnerNames = winners.map(w=>w.name).join(' ×•');
   const checkWin = winners.find(w=>w.position>=TILE_COUNT-1);
-  showHostEvent('🎮','תוצאות ספיד ראונד!',
-    `${winnerNames} ניצח${winners.length>1?'ו':''} וקיבל${winners.length>1?'ו':''} 3 שדות קדימה! 🏅`,
+  showHostEvent('ðŸŽ®','×ª×•×¦××•×ª ×¡×¤×™×“ ×¨××•× ×“!',
+    `${winnerNames} × ×™×¦×—${winners.length>1?'×•':''} ×•×§×™×‘×œ${winners.length>1?'×•':''} 3 ×©×“×•×ª ×§×“×™×ž×”! ðŸ…`,
     ()=>{
       if(checkWin) hostWin(G.players.indexOf(checkWin));
       else hostNextTurn();
     });
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // HOST: NEXT TURN
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function hostNextTurn(){
   G.rollGate = false;
   G.rollGateCorrect = false;
@@ -1188,9 +1149,9 @@ function hostNextTurn(){
   hostSetTurn();
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // HOST: WIN
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function hostWin(idx){
   G.phase = 'win';
   const p = G.players[idx];
@@ -1205,19 +1166,19 @@ function showWinScreen(winner, players){
   const sorted = [...players].sort((a,b)=>b.score-a.score);
   document.getElementById('win-scoreboard').innerHTML = sorted.map((p,i)=>`
     <div class="psb-row">
-      <div class="psb-rank">${i===0?'🥇':i===1?'🥈':i===2?'🥉':'🏅'}</div>
+      <div class="psb-rank">${i===0?'ðŸ¥‡':i===1?'ðŸ¥ˆ':i===2?'ðŸ¥‰':'ðŸ…'}</div>
       <div class="psb-tok">${p.token}</div>
       <div class="psb-name" style="color:${p.color}">${p.name}</div>
-      <div class="psb-pts">${p.score} נק׳</div>
-      <div class="psb-pos">שדה ${p.position+1}</div>
+      <div class="psb-pts">${p.score} × ×§×³</div>
+      <div class="psb-pos">×©×“×” ${p.position+1}</div>
     </div>`).join('');
   confetti();
   show('win-screen');
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // HOST: BOARD
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const TILE_POS = (() => {
   const cols=5, rows=6, startX=56, startY=474, sx=82, sy=84;
   const pos=[];
@@ -1277,7 +1238,7 @@ function buildBoard(){
     const em=document.createElementNS('http://www.w3.org/2000/svg','text');
     em.setAttribute('x',pos.x);em.setAttribute('y',pos.y+6);
     em.setAttribute('text-anchor','middle');em.setAttribute('font-size','14');
-    em.textContent=TILE_EMOJIS[type]||'🏝️';
+    em.textContent=TILE_EMOJIS[type]||'ðŸï¸';
     g.appendChild(em);
     svg.appendChild(g);
   });
@@ -1316,11 +1277,11 @@ function renderHostScores(){
       <div class="score-tok">${p.token}</div>
       <div>
         <div class="score-name" style="color:${p.color}">${p.name}</div>
-        <div class="score-pos">שדה ${p.position+1}/30</div>
+        <div class="score-pos">×©×“×” ${p.position+1}/30</div>
       </div>
       <div>
-        <div class="score-pts">${p.score} נק׳</div>
-        ${!p.connected?'<div style="font-size:.65rem;color:var(--coral)">נותק</div>':''}
+        <div class="score-pts">${p.score} × ×§×³</div>
+        ${!p.connected?'<div style="font-size:.65rem;color:var(--coral)">× ×•×ª×§</div>':''}
       </div>
     </div>`).join('');
 }
@@ -1331,9 +1292,9 @@ function svgEl(tag, attrs){
   return el;
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // JOIN (PLAYER SIDE)
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function showJoin(){
   sfx.click();
   show('join');
@@ -1342,27 +1303,27 @@ function showJoin(){
   if(hash.length===6) document.getElementById('join-code').value=hash.toUpperCase();
 }
 
-function doJoin(){
+async function doJoin(){
   sfx.click();
   const code = document.getElementById('join-code').value.trim().toUpperCase();
   const name = document.getElementById('join-name').value.trim();
   const err  = document.getElementById('join-error');
 
-  if(!code || code.length<4){ err.textContent='הכנס קוד תקין'; return; }
-  if(!name){ err.textContent='הכנס שם'; return; }
+  if(!code || code.length<4){ err.textContent='×”×›× ×¡ ×§×•×“ ×ª×§×™×Ÿ'; return; }
+  if(!name){ err.textContent='×”×›× ×¡ ×©×'; return; }
 
-  err.textContent='מתחבר...';
+  err.textContent='×ž×ª×—×‘×¨...';
   document.getElementById('join-btn').disabled=true;
 
   try{
-    initFirebase();
+    await initFirebase();
     myRole='player';
     myClientId = newClientId();
     roomCode = code;
     roomRef = code;
     window.FirebaseMod.getDoc(window.FirebaseMod.doc(db, 'rooms', code)).then(snap=>{
       if(!snap.exists()){
-        err.textContent='קוד לא נמצא. בדוק שוב.';
+        err.textContent='×§×•×“ ×œ× × ×ž×¦×. ×‘×“×•×§ ×©×•×‘.';
         document.getElementById('join-btn').disabled=false;
         return;
       }
@@ -1370,46 +1331,23 @@ function doJoin(){
       window.FirebaseMod.setDoc(window.FirebaseMod.doc(db, 'rooms', roomRef, 'presence', myClientId), {
         connected:true,
         ts:window.FirebaseMod.serverTimestamp()
-      });
+      }).catch(err=>showFirebaseError('Firebase presence failed: ' + err.message));
       sendToHost({type:'join', name});
       err.textContent='';
+    }).catch(e=>{
+      err.textContent='×©×’×™××ª ×—×™×‘×•×¨: '+e.message;
+      document.getElementById('join-btn').disabled=false;
     });
   } catch(e){
-    err.textContent='שגיאת חיבור: '+e.message;
+    err.textContent='×©×’×™××ª ×—×™×‘×•×¨: '+e.message;
     document.getElementById('join-btn').disabled=false;
   }
   return;
-
-  myRole='player';
-  myPeer = new Peer(undefined, {debug:0});
-  myPeer.on('open', id=>{
-    hostConn = myPeer.connect('kruz-'+code, {reliable:true});
-    hostConn.on('open',()=>{
-      hostConn.send({type:'join', name});
-      err.textContent='';
-    });
-    hostConn.on('data', onHostData);
-    hostConn.on('error', e=>{
-      err.textContent='שגיאת חיבור: '+e.type;
-      document.getElementById('join-btn').disabled=false;
-    });
-    hostConn.on('close',()=>{
-      if(myRole==='player') err.textContent='החיבור נסגר';
-    });
-  });
-  myPeer.on('error', e=>{
-    if(e.type==='peer-unavailable'){
-      err.textContent='קוד לא נמצא. בדוק שוב.';
-    } else {
-      err.textContent='שגיאה: '+e.type;
-    }
-    document.getElementById('join-btn').disabled=false;
-  });
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // PLAYER: RECEIVE FROM HOST
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 let myPlayerData = null; // {id,name,token,color,position,score}
 let playerPhase = 'wait';
 let myAnsweredThisQ = false;
@@ -1430,7 +1368,7 @@ function onHostData(data){
       show('player-game');
       playerPhase='wait';
       renderPlayerHeader();
-      renderPlayerBody_wait('המשחק התחיל!');
+      renderPlayerBody_wait('×”×ž×©×—×§ ×”×ª×—×™×œ!');
       break;
 
     case 'turnQuestion':
@@ -1438,7 +1376,7 @@ function onHostData(data){
       myAnsweredThisQ=false;
       playerPhase='watch';
       renderPlayerHeader();
-      renderPlayerBody_wait(`שאלת כניסה לגלגול: ${data.players[data.currentIdx]?.name||''}`);
+      renderPlayerBody_wait(`×©××œ×ª ×›× ×™×¡×” ×œ×’×œ×’×•×œ: ${data.players[data.currentIdx]?.name||''}`);
       break;
 
     case 'yourTurn':
@@ -1452,7 +1390,7 @@ function onHostData(data){
 
     case 'rolled':
       syncPlayerData(data.players||[]);
-      renderPlayerBody_wait(`🎲 ${data.dice} — מפליגים על הלוח...`);
+      renderPlayerBody_wait(`ðŸŽ² ${data.dice} â€” ×ž×¤×œ×™×’×™× ×¢×œ ×”×œ×•×—...`);
       break;
 
     case 'moved':
@@ -1466,7 +1404,7 @@ function onHostData(data){
       break;
 
     case 'eventDone':
-      renderPlayerBody_wait('ממתין לתור הבא...');
+      renderPlayerBody_wait('×ž×ž×ª×™×Ÿ ×œ×ª×•×¨ ×”×‘×...');
       break;
 
     case 'question':
@@ -1474,7 +1412,7 @@ function onHostData(data){
       G._lastAnswer = undefined;
       playerPhase = 'question';
       if(data.rollGate && data.targetId !== myPlayerData?.id){
-        renderPlayerBody_wait('השחקן שבתור עונה כדי לפתוח גלגול...');
+        renderPlayerBody_wait('×”×©×—×§×Ÿ ×©×‘×ª×•×¨ ×¢×•× ×” ×›×“×™ ×œ×¤×ª×•×— ×’×œ×’×•×œ...');
       } else {
         renderPlayerBody_question(data.q, data.a, data.timeLimit, data.isSpeed, data.rollGate);
       }
@@ -1493,15 +1431,15 @@ function onHostData(data){
       break;
 
     case 'questionDone':
-      renderPlayerBody_wait('ממתין לתור הבא...');
+      renderPlayerBody_wait('×ž×ž×ª×™×Ÿ ×œ×ª×•×¨ ×”×‘×...');
       break;
 
     case 'speedRoundStart':
-      renderPlayerBody_wait('⚡ ספיד ראונד מתחיל!');
+      renderPlayerBody_wait('âš¡ ×¡×¤×™×“ ×¨××•× ×“ ×ž×ª×—×™×œ!');
       break;
 
     case 'skippedTurn':
-      renderPlayerBody_wait(`${data.playerName} מדלג תור!`);
+      renderPlayerBody_wait(`${data.playerName} ×ž×“×œ×’ ×ª×•×¨!`);
       break;
 
     case 'win':
@@ -1521,15 +1459,15 @@ function syncPlayerData(players){
   }
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // PLAYER BODY RENDERERS
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function renderPlayerHeader(){
   if(!myPlayerData) return;
-  document.getElementById('pg-token').textContent = myPlayerData.token||'🚢';
-  document.getElementById('pg-name').textContent  = myPlayerData.name||'שחקן';
-  document.getElementById('pg-score').textContent = (myPlayerData.score||0)+' נק׳';
-  document.getElementById('pg-pos').textContent   = 'שדה '+(myPlayerData.position+1||1)+'/30';
+  document.getElementById('pg-token').textContent = myPlayerData.token||'ðŸš¢';
+  document.getElementById('pg-name').textContent  = myPlayerData.name||'×©×—×§×Ÿ';
+  document.getElementById('pg-score').textContent = (myPlayerData.score||0)+' × ×§×³';
+  document.getElementById('pg-pos').textContent   = '×©×“×” '+(myPlayerData.position+1||1)+'/30';
 }
 
 function renderPlayerBody(html){
@@ -1538,20 +1476,20 @@ function renderPlayerBody(html){
 
 function renderPlayerBody_wait(msg){
   renderPlayerBody(`
-    <span class="waiting-spinner">⏳</span>
+    <span class="waiting-spinner">â³</span>
     <div class="waiting-msg">${msg}</div>`);
 }
 
 function renderPlayerBody_turn(currentName, isMyTurn){
   if(isMyTurn){
     renderPlayerBody(`
-      <div style="text-align:center;color:rgba(255,255,255,.6);margin-bottom:16px;font-size:.95rem">תורך! גלגל קוביה.</div>
-      <button class="dice-roll-btn" id="roll-btn" onclick="playerRoll()">🎲</button>
-      <div style="text-align:center;color:rgba(255,255,255,.4);font-size:.8rem;margin-top:12px">לחץ לגלגל</div>`);
+      <div style="text-align:center;color:rgba(255,255,255,.6);margin-bottom:16px;font-size:.95rem">×ª×•×¨×š! ×’×œ×’×œ ×§×•×‘×™×”.</div>
+      <button class="dice-roll-btn" id="roll-btn" onclick="playerRoll()">ðŸŽ²</button>
+      <div style="text-align:center;color:rgba(255,255,255,.4);font-size:.8rem;margin-top:12px">×œ×—×¥ ×œ×’×œ×’×œ</div>`);
   } else {
     renderPlayerBody(`
-      <span class="waiting-spinner">🎲</span>
-      <div class="waiting-msg">תורו של <strong style="color:var(--cyan)">${currentName}</strong></div>`);
+      <span class="waiting-spinner">ðŸŽ²</span>
+      <div class="waiting-msg">×ª×•×¨×• ×©×œ <strong style="color:var(--cyan)">${currentName}</strong></div>`);
   }
 }
 
@@ -1568,12 +1506,12 @@ function renderPlayerBody_question(q, answers, timeLimit, isSpeed, rollGate){
   clearInterval(playerQTimer);
   let t = timeLimit;
 
-  const shapes=['▲','◆','●','■'];
+  const shapes=['â–²','â—†','â—','â– '];
   const kClasses=['k-red','k-blue','k-yellow','k-green'];
 
   renderPlayerBody(`
-    ${rollGate?'<div style="color:var(--gold);font-weight:700;font-size:.85rem;margin-bottom:4px">⚓ ענה נכון כדי לגלגל</div>':''}
-    ${isSpeed?'<div style="color:var(--purple);font-weight:700;font-size:.85rem;margin-bottom:4px">⚡ ספיד ראונד</div>':''}
+    ${rollGate?'<div style="color:var(--gold);font-weight:700;font-size:.85rem;margin-bottom:4px">âš“ ×¢× ×” × ×›×•×Ÿ ×›×“×™ ×œ×’×œ×’×œ</div>':''}
+    ${isSpeed?'<div style="color:var(--purple);font-weight:700;font-size:.85rem;margin-bottom:4px">âš¡ ×¡×¤×™×“ ×¨××•× ×“</div>':''}
     <div class="q-timer-player" id="pq-timer">${t}</div>
     <div class="q-text-player">${q}</div>
     <div class="kahoot-answers">
@@ -1598,14 +1536,14 @@ function renderPlayerBody_question(q, answers, timeLimit, isSpeed, rollGate){
 function renderPlayerBody_result(correct){
   clearInterval(playerQTimer);
   if(correct===undefined||correct===null){
-    renderPlayerBody('<div class="waiting-msg">ממתין לתוצאות...</div>');
+    renderPlayerBody('<div class="waiting-msg">×ž×ž×ª×™×Ÿ ×œ×ª×•×¦××•×ª...</div>');
     return;
   }
   renderPlayerBody(`
     <div class="result-card ${correct?'correct':'wrong'}">
-      <div class="result-icon">${correct?'✅':'❌'}</div>
-      <div class="result-label">${correct?'נכון!':'לא נכון'}</div>
-      <div class="result-pts">${correct?'+נקודות!':'אין תזוזה בתור הזה'}</div>
+      <div class="result-icon">${correct?'âœ…':'âŒ'}</div>
+      <div class="result-label">${correct?'× ×›×•×Ÿ!':'×œ× × ×›×•×Ÿ'}</div>
+      <div class="result-pts">${correct?'+× ×§×•×“×•×ª!':'××™×Ÿ ×ª×–×•×–×” ×‘×ª×•×¨ ×”×–×”'}</div>
     </div>`);
 }
 
@@ -1614,7 +1552,7 @@ function playerRoll(){
   const btn = document.getElementById('roll-btn');
   if(btn) btn.disabled=true;
   sendToHost({type:'roll'});
-  renderPlayerBody_wait('מגלגל...');
+  renderPlayerBody_wait('×ž×’×œ×’×œ...');
 }
 
 function playerAnswer(choice){
@@ -1630,9 +1568,9 @@ function playerAnswer(choice){
   sendToHost({type:'answer', choice});
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // UTILS
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function randomCode(){
   const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   return Array.from({length:6},()=>chars[Math.floor(Math.random()*chars.length)]).join('');
@@ -1657,9 +1595,9 @@ function confetti(){
   }
 }
 
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // INIT
-// ═══════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 show('landing');
 
 // Support URL hash for quick join: index.html#CODE
