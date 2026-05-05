@@ -5,7 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>הקרוז 🚢</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;900&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+  getFirestore, collection, doc, setDoc, addDoc, getDoc,
+  onSnapshot, query, orderBy, serverTimestamp, deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+window.FirebaseMod = {
+  initializeApp, getFirestore, collection, doc, setDoc, addDoc, getDoc,
+  onSnapshot, query, orderBy, serverTimestamp, deleteDoc
+};
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -443,10 +456,113 @@ function show(id){
 // PEER STATE
 // ═══════════════════════════════════════════
 let myRole = 'none'; // 'host' | 'player'
-let myPeer = null;
+let myClientId = null;
 let hostConn = null;         // player → host connection
 let playerConns = {};        // host: peerId → DataConnection
 let roomCode = '';
+let db = null;
+let roomRef = null;
+let roomUnsubs = [];
+
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCyfqVnEh5maxJJzTPnmgmbvnSsIrKvm0o",
+  authDomain: "hebrew-cruise-game-20260505.firebaseapp.com",
+  projectId: "hebrew-cruise-game-20260505",
+  storageBucket: "hebrew-cruise-game-20260505.firebasestorage.app",
+  messagingSenderId: "506267295736",
+  appId: "1:506267295736:web:d2908157a7a0057630c00d"
+};
+
+function firebaseReady(){
+  return FIREBASE_CONFIG.apiKey && !FIREBASE_CONFIG.apiKey.includes('PASTE_');
+}
+
+function initFirebase(){
+  if(!firebaseReady()){
+    alert('Firebase is not configured yet. Paste your Firebase web config into FIREBASE_CONFIG in index.html.');
+    throw new Error('Missing Firebase config');
+  }
+  if(!window.FirebaseMod) throw new Error('Firebase module is still loading. Try again in a moment.');
+  if(!window.firebaseAppMod) window.firebaseAppMod = window.FirebaseMod.initializeApp(FIREBASE_CONFIG);
+  db = window.FirebaseMod.getFirestore(window.firebaseAppMod, 'default');
+}
+
+function newClientId(){
+  return 'p-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,8);
+}
+
+function listenForPlayerMessages(){
+  roomUnsubs.forEach(unsub=>unsub());
+  roomUnsubs = [];
+  const inboxQuery = window.FirebaseMod.query(
+    window.FirebaseMod.collection(db, 'rooms', roomRef, 'inbox'),
+    window.FirebaseMod.orderBy('ts')
+  );
+  const unsub = window.FirebaseMod.onSnapshot(inboxQuery, snapshot=>{
+    snapshot.docChanges().forEach(change=>{
+      if(change.type !== 'added') return;
+      const data = change.doc.data();
+      window.FirebaseMod.deleteDoc(change.doc.ref);
+      if(!data || !data.peerId) return;
+      const {peerId, ...msg} = data;
+      onPlayerData(peerId, msg);
+    });
+  });
+  roomUnsubs.push(unsub);
+}
+
+function listenForHostMessages(){
+  roomUnsubs.forEach(unsub=>unsub());
+  roomUnsubs = [];
+  const msgQuery = window.FirebaseMod.query(
+    window.FirebaseMod.collection(db, 'rooms', roomRef, 'messages', myClientId, 'items'),
+    window.FirebaseMod.orderBy('ts')
+  );
+  const unsub = window.FirebaseMod.onSnapshot(msgQuery, snapshot=>{
+    snapshot.docChanges().forEach(change=>{
+      if(change.type !== 'added') return;
+      const data = change.doc.data();
+      window.FirebaseMod.deleteDoc(change.doc.ref);
+      if(data) onHostData(data);
+    });
+  });
+  roomUnsubs.push(unsub);
+}
+
+function sendToHost(data){
+  if(!roomRef || !myClientId) return;
+  window.FirebaseMod.addDoc(window.FirebaseMod.collection(db, 'rooms', roomRef, 'inbox'), {
+    ...data,
+    peerId: myClientId,
+    ts: window.FirebaseMod.serverTimestamp()
+  });
+}
+
+/*
+    if(!data || !data.peerId) return;
+    const {peerId, ...msg} = data;
+    onPlayerData(peerId, msg);
+  });
+}
+
+function listenForHostMessages(){
+  roomRef.child('messages').child(myClientId).off();
+  roomRef.child('messages').child(myClientId).on('child_added', snap=>{
+    const data = snap.val();
+    snap.ref.remove();
+    if(data) onHostData(data);
+  });
+}
+
+function sendToHost(data){
+  if(!roomRef || !myClientId) return;
+  roomRef.child('inbox').push({
+    ...data,
+    peerId: myClientId,
+    ts: firebase.database.ServerValue.TIMESTAMP
+  });
+}
+*/
 
 // ═══════════════════════════════════════════
 // GAME STATE (authoritative on host)
@@ -473,6 +589,7 @@ let G = {
 // ═══════════════════════════════════════════
 function goHost(){
   sfx.click();
+  initFirebase();
   show('host-lobby');
   const code = randomCode();
   roomCode = code;
@@ -483,17 +600,20 @@ function goHost(){
   const url = location.href.split('#')[0];
   document.getElementById('join-url-display').textContent = url + ' → קוד: ' + code;
 
-  myPeer = new Peer('kruz-' + code, {debug:0});
-  myPeer.on('open', ()=>{
-    console.log('Host peer open:', myPeer.id);
+  roomRef = code;
+  window.FirebaseMod.setDoc(window.FirebaseMod.doc(db, 'rooms', code), {
+    createdAt: window.FirebaseMod.serverTimestamp(),
+    status:'lobby'
   });
-  myPeer.on('connection', onPlayerConnect);
+  listenForPlayerMessages();
+  /*
   myPeer.on('error', e=>{
     if(e.type==='unavailable-id'){
       // Code taken — try new one
       goHost();
     }
   });
+  */
 
   G.triviaPool = shuffle([...TRIVIA]);
   G.speedPool = shuffle([...TRIVIA]);
@@ -511,6 +631,7 @@ function onPlayerConnect(conn){
 
 function onPlayerData(peerId, data){
   if(data.type === 'join'){
+    if(G.players.some(p=>p.id===peerId)) return;
     const idx = TOKENS.indexOf(data.token) !== -1 ? TOKENS.indexOf(data.token) : G.players.length % TOKENS.length;
     G.players.push({
       id: peerId,
@@ -521,7 +642,6 @@ function onPlayerData(peerId, data){
       score: 0,
       connected: true,
     });
-    playerConns[peerId] = myPeer.connections[peerId]?.[0] || findConn(peerId);
     updateLobbyUI();
     sendToPlayer(peerId, {type:'joined', player: G.players[G.players.length-1], players: G.players});
   }
@@ -564,10 +684,11 @@ function onPlayerDisconnect(peerId){
 }
 
 function sendToPlayer(peerId, data){
-  const conns = myPeer.connections[peerId];
-  if(conns && conns.length){
-    try{ conns[0].send(data); }catch(e){}
-  }
+  if(!roomRef) return;
+  window.FirebaseMod.addDoc(window.FirebaseMod.collection(db, 'rooms', roomRef, 'messages', peerId, 'items'), {
+    ...data,
+    ts: window.FirebaseMod.serverTimestamp()
+  });
 }
 
 function broadcast(data){
@@ -1233,6 +1354,32 @@ function doJoin(){
   err.textContent='מתחבר...';
   document.getElementById('join-btn').disabled=true;
 
+  try{
+    initFirebase();
+    myRole='player';
+    myClientId = newClientId();
+    roomCode = code;
+    roomRef = code;
+    window.FirebaseMod.getDoc(window.FirebaseMod.doc(db, 'rooms', code)).then(snap=>{
+      if(!snap.exists()){
+        err.textContent='קוד לא נמצא. בדוק שוב.';
+        document.getElementById('join-btn').disabled=false;
+        return;
+      }
+      listenForHostMessages();
+      window.FirebaseMod.setDoc(window.FirebaseMod.doc(db, 'rooms', roomRef, 'presence', myClientId), {
+        connected:true,
+        ts:window.FirebaseMod.serverTimestamp()
+      });
+      sendToHost({type:'join', name});
+      err.textContent='';
+    });
+  } catch(e){
+    err.textContent='שגיאת חיבור: '+e.message;
+    document.getElementById('join-btn').disabled=false;
+  }
+  return;
+
   myRole='player';
   myPeer = new Peer(undefined, {debug:0});
   myPeer.on('open', id=>{
@@ -1466,7 +1613,7 @@ function playerRoll(){
   sfx.dice();
   const btn = document.getElementById('roll-btn');
   if(btn) btn.disabled=true;
-  if(hostConn) hostConn.send({type:'roll'});
+  sendToHost({type:'roll'});
   renderPlayerBody_wait('מגלגל...');
 }
 
@@ -1480,7 +1627,7 @@ function playerAnswer(choice){
   const chosen = document.getElementById(`pqa-${choice}`);
   if(chosen) chosen.style.opacity='1';
   G._lastAnswer = choice; // remember for when host reveals correct answer
-  if(hostConn) hostConn.send({type:'answer', choice});
+  sendToHost({type:'answer', choice});
 }
 
 // ═══════════════════════════════════════════
