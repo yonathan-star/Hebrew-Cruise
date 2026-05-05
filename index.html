@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>הקרוז 🚢</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0a0e2a;--deep:#060918;--cyan:#00d4ff;--gold:#ffd700;
+  --coral:#ff6b6b;--mint:#00e5a0;--blue:#4da6ff;--purple:#a855f7;
+  --card:rgba(255,255,255,0.06);--border:rgba(0,212,255,0.3);
+}
+html,body{height:100%;font-family:'Heebo',sans-serif;background:var(--navy);color:#fff;direction:rtl;overflow:hidden}
+
+/* ─── SCREENS ─── */
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;transition:opacity .3s,transform .3s;overflow-y:auto}
+.screen.off{opacity:0;pointer-events:none;transform:scale(.97)}
+
+/* ─── STARS ─── */
+body::before{content:'';position:fixed;inset:0;
+  background:radial-gradient(1px 1px at 8% 12%,#fff,transparent),
+  radial-gradient(1px 1px at 22% 38%,rgba(255,255,255,.7),transparent),
+  radial-gradient(1px 1px at 48% 18%,#fff,transparent),
+  radial-gradient(1px 1px at 68% 8%,rgba(255,255,255,.8),transparent),
+  radial-gradient(1px 1px at 82% 28%,#fff,transparent),
+  radial-gradient(1px 1px at 14% 68%,rgba(255,255,255,.6),transparent),
+  radial-gradient(1px 1px at 38% 58%,#fff,transparent),
+  radial-gradient(1px 1px at 58% 78%,rgba(255,255,255,.5),transparent),
+  radial-gradient(1px 1px at 88% 62%,#fff,transparent),
+  radial-gradient(1px 1px at 4% 88%,rgba(255,255,255,.7),transparent),
+  radial-gradient(1px 1px at 72% 48%,rgba(255,255,255,.6),transparent);
+  pointer-events:none;z-index:0}
+
+/* ─── TYPOGRAPHY ─── */
+.game-logo{font-size:clamp(2.5rem,8vw,4.5rem);font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.25)}}
+.sub{color:rgba(255,255,255,.5);font-size:.95rem;text-align:center;margin-top:4px}
+
+/* ─── CARDS ─── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;backdrop-filter:blur(10px);width:min(480px,96vw)}
+.card-sm{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 20px;backdrop-filter:blur(8px)}
+
+/* ─── BUTTONS ─── */
+.btn{display:block;width:100%;padding:15px;border-radius:14px;border:none;font-family:'Heebo',sans-serif;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .18s;text-align:center}
+.btn:hover:not(:disabled){filter:brightness(1.12);transform:translateY(-2px)}
+.btn:active:not(:disabled){transform:translateY(0) scale(.97)}
+.btn:disabled{opacity:.35;cursor:default}
+.btn-cyan{background:linear-gradient(135deg,var(--cyan),#0099cc);color:var(--navy)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#cc9900);color:#000}
+.btn-coral{background:linear-gradient(135deg,var(--coral),#cc4444);color:#fff}
+.btn-ghost{background:rgba(255,255,255,.07);border:1px solid var(--border);color:#fff}
+.btn-sm{padding:10px 20px;font-size:.9rem;border-radius:10px;width:auto;display:inline-block}
+
+/* ─── INPUTS ─── */
+.inp{width:100%;padding:13px 16px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:#fff;font-family:'Heebo',sans-serif;font-size:1rem;outline:none;transition:border-color .2s;text-align:right}
+.inp:focus{border-color:var(--cyan)}
+.inp::placeholder{color:rgba(255,255,255,.3)}
+label{display:block;color:var(--cyan);font-size:.82rem;font-weight:600;margin-bottom:6px}
+
+/* ─── LANDING ─── */
+#landing .card{display:flex;flex-direction:column;gap:14px;margin-top:20px}
+
+/* ─── LOBBY (HOST) ─── */
+.room-code-box{background:linear-gradient(135deg,rgba(0,212,255,.15),rgba(0,212,255,.05));border:2px solid var(--cyan);border-radius:16px;padding:20px;text-align:center;margin-bottom:16px}
+.room-code-label{font-size:.8rem;color:rgba(255,255,255,.5);margin-bottom:6px}
+.room-code{font-size:3rem;font-weight:900;letter-spacing:.25em;color:var(--cyan);font-variant-numeric:tabular-nums}
+.join-url{font-size:.75rem;color:rgba(255,255,255,.4);margin-top:6px;word-break:break-all}
+.player-join-list{display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto;margin-bottom:16px}
+.player-join-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--border);animation:slideIn .3s ease}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.pji-token{font-size:1.6rem}
+.pji-name{font-weight:700;flex:1}
+.pji-badge{font-size:.7rem;padding:3px 8px;border-radius:20px;background:rgba(0,229,160,.15);color:var(--mint);border:1px solid rgba(0,229,160,.3)}
+.waiting-hint{text-align:center;color:rgba(255,255,255,.4);font-size:.82rem;margin-bottom:14px}
+
+/* ─── JOIN SCREEN ─── */
+#join .card{display:flex;flex-direction:column;gap:14px}
+.join-fields{display:flex;flex-direction:column;gap:12px}
+
+/* ─── HOST GAME SCREEN ─── */
+#host-game{flex-direction:row;align-items:flex-start;gap:14px;justify-content:center;padding:10px}
+.host-sidebar{width:200px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;padding-top:4px;max-height:100vh;overflow-y:auto}
+.board-area{flex:1;min-width:0;display:flex;align-items:center;justify-content:center}
+#board-svg{width:min(520px,calc(100vh - 30px));height:min(520px,calc(100vh - 30px))}
+
+.hud-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px}
+.hud-title{font-size:.7rem;color:rgba(255,255,255,.4);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.turn-token{font-size:2.2rem;text-align:center;margin:4px 0}
+.turn-name{text-align:center;font-weight:700;font-size:1rem}
+.status-pill{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);border-radius:8px;padding:7px 10px;font-size:.78rem;color:rgba(255,255,255,.7);text-align:center;line-height:1.4}
+
+.score-list{display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto}
+.score-row{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid transparent;transition:border-color .3s}
+.score-row.active-turn{border-color:var(--gold)}
+.score-tok{font-size:1.3rem}
+.score-name{flex:1;font-size:.85rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.score-pts{font-size:.8rem;color:var(--gold);font-weight:700}
+.score-pos{font-size:.7rem;color:rgba(255,255,255,.4)}
+
+.code-mini{text-align:center;font-size:.7rem;color:rgba(255,255,255,.3);margin-top:2px}
+.code-mini span{color:var(--cyan);font-weight:700;letter-spacing:.1em}
+
+/* ─── OVERLAYS ─── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.46);z-index:80;display:flex;align-items:center;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(2px);padding:18px}
+.overlay.show{opacity:1;pointer-events:all}
+.ov-card{background:linear-gradient(135deg,#0d1f4a,#0a1530);border:1px solid var(--border);border-radius:24px;padding:32px 28px;width:min(460px,94vw);text-align:center;animation:pop .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.ov-emoji{font-size:3.5rem;margin-bottom:10px}
+.ov-title{font-size:1.6rem;font-weight:900;color:var(--gold);margin-bottom:8px}
+.ov-desc{color:rgba(255,255,255,.75);line-height:1.5;margin-bottom:22px}
+
+/* ─── QUESTION OVERLAY (host) ─── */
+.q-category{font-size:.75rem;color:var(--cyan);font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:.1em}
+.q-text{font-size:1.2rem;font-weight:600;margin-bottom:18px;line-height:1.5}
+.q-timer{font-size:2.5rem;font-weight:900;color:var(--gold);margin-bottom:12px}
+.q-timer.urgent{color:var(--coral);animation:urgentPulse .5s ease-in-out infinite}
+@keyframes urgentPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.q-answers-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.q-ans-host{padding:12px 10px;border-radius:12px;font-size:.95rem;font-weight:600;border:2px solid transparent;display:flex;align-items:center;gap:8px}
+.q-ans-host.revealed.correct-ans{border-color:var(--mint);background:rgba(0,229,160,.15);color:var(--mint)}
+.q-ans-host.revealed.wrong-ans{opacity:.45}
+.ans-shape{width:28px;height:28px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
+.sh-red{background:#e21b3c}.sh-blue{background:#1368ce}.sh-gold{background:#d89e00}.sh-green{background:#26890c}
+.answerers-line{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:8px;min-height:18px}
+
+/* ─── PLAYER GAME SCREEN ─── */
+#player-game{background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0}
+.player-header{width:100%;padding:14px 16px;background:rgba(0,0,0,.3);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.ph-token{font-size:1.8rem}
+.ph-name{font-weight:700;font-size:1rem;flex:1}
+.ph-score{font-size:.8rem;color:var(--gold);font-weight:700}
+.ph-pos{font-size:.7rem;color:rgba(255,255,255,.4)}
+.player-body{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:16px;overflow-y:auto}
+
+/* Roll phase */
+.dice-roll-btn{width:160px;height:160px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--gold),#cc9900);color:#000;font-size:4rem;cursor:pointer;transition:all .2s;box-shadow:0 8px 40px rgba(255,215,0,.4)}
+.dice-roll-btn:hover{transform:scale(1.06);box-shadow:0 12px 50px rgba(255,215,0,.6)}
+.dice-roll-btn:active{transform:scale(.94)}
+.dice-roll-btn:disabled{opacity:.3;cursor:default;box-shadow:none}
+.waiting-msg{text-align:center;color:rgba(255,255,255,.5);font-size:1rem}
+.waiting-spinner{font-size:2rem;animation:spin 1.5s linear infinite;display:block;margin:0 auto 10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Answer buttons (Kahoot style) */
+.kahoot-answers{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.kahoot-btn{padding:0;border:none;border-radius:14px;cursor:pointer;font-family:'Heebo',sans-serif;font-weight:700;font-size:1.05rem;color:#fff;transition:all .15s;display:flex;align-items:center;gap:10px;min-height:70px;position:relative;overflow:hidden}
+.kahoot-btn:active:not(:disabled){transform:scale(.94)}
+.kahoot-btn:disabled{opacity:.55;cursor:default}
+.kahoot-btn .k-shape{width:44px;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;background:rgba(0,0,0,.2)}
+.kahoot-btn .k-text{flex:1;text-align:center;padding:8px 10px 8px 0;line-height:1.3}
+.k-red{background:#e21b3c}.k-blue{background:#1368ce}.k-yellow{background:#d89e00}.k-green{background:#26890c}
+.kahoot-btn.answered{opacity:.6;pointer-events:none}
+.kahoot-btn.correct-flash{animation:correctFlash .5s ease}
+.kahoot-btn.wrong-flash{animation:wrongFlash .5s ease}
+@keyframes correctFlash{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes wrongFlash{0%,100%{transform:scale(1)}50%{transform:scale(.94)}}
+.q-text-player{font-size:1.1rem;font-weight:600;text-align:center;line-height:1.5;color:#fff;width:100%}
+.q-timer-player{font-size:3rem;font-weight:900;color:var(--gold);text-align:center}
+.q-timer-player.urgent{color:var(--coral)}
+
+/* Result card */
+.result-card{text-align:center;padding:24px;border-radius:20px;width:100%}
+.result-card.correct{background:rgba(0,229,160,.15);border:2px solid var(--mint)}
+.result-card.wrong{background:rgba(255,107,107,.12);border:2px solid var(--coral)}
+.result-icon{font-size:4rem;margin-bottom:10px}
+.result-label{font-size:1.3rem;font-weight:700}
+.result-pts{font-size:.9rem;color:rgba(255,255,255,.6);margin-top:6px}
+
+/* Player event card */
+.event-card-player{text-align:center;padding:24px;border-radius:20px;border:1px solid var(--border);background:rgba(255,255,255,.05);width:100%}
+.ecp-emoji{font-size:3.5rem;margin-bottom:10px}
+.ecp-title{font-size:1.4rem;font-weight:900;color:var(--gold);margin-bottom:8px}
+.ecp-desc{color:rgba(255,255,255,.7);line-height:1.5}
+
+/* Score board on player */
+.player-scoreboard{width:100%;display:flex;flex-direction:column;gap:8px}
+.psb-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--border)}
+.psb-rank{font-size:1.2rem;min-width:28px}
+.psb-tok{font-size:1.3rem}
+.psb-name{flex:1;font-weight:600}
+.psb-pts{color:var(--gold);font-weight:700;font-size:.9rem}
+.psb-pos{font-size:.75rem;color:rgba(255,255,255,.4)}
+
+/* ─── WIN SCREEN ─── */
+#win-screen{background:radial-gradient(ellipse at center,#0d2040,#060918)}
+.win-ship{font-size:6rem;animation:winBounce 1s ease-in-out infinite}
+@keyframes winBounce{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-20px) rotate(5deg)}}
+.win-title{font-size:clamp(2rem,7vw,3.5rem);font-weight:900;background:linear-gradient(135deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}
+.win-name{font-size:clamp(1.5rem,5vw,2.5rem);font-weight:700;text-align:center}
+
+/* ─── CONFETTI ─── */
+.confetti{position:fixed;width:10px;height:10px;border-radius:2px;z-index:200;pointer-events:none;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+
+/* ─── CONNECTING ─── */
+.connecting-dots::after{content:'...';animation:dots 1.4s infinite}
+@keyframes dots{0%{content:'.'}33%{content:'..'}66%{content:'...'}100%{content:'.'}}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:620px){
+  #host-game{flex-direction:column;align-items:center}
+  .host-sidebar{width:100%;flex-direction:row;flex-wrap:wrap;padding-top:0;max-height:none}
+  .hud-card{flex:1;min-width:140px}
+  .board-area{width:100%}
+  #board-svg{width:min(360px,95vw);height:min(360px,95vw)}
+  .score-list{flex-direction:row;flex-wrap:wrap;max-height:none}
+  .score-row{min-width:120px}
+  .overlay{justify-content:center;padding:12px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LANDING ══ -->
+<div id="landing" class="screen">
+  <div class="game-logo">🚢 הקרוז</div>
+  <div class="sub">משחק לוח רב-שחקנים — קהוט ימי!</div>
+  <div class="card" style="margin-top:22px;gap:12px;display:flex;flex-direction:column">
+    <button class="btn btn-cyan" onclick="goHost()">🎮 פתח משחק (מארח)</button>
+    <button class="btn btn-ghost" onclick="showJoin()">📱 הצטרף למשחק</button>
+  </div>
+  <div style="margin-top:16px;font-size:.75rem;color:rgba(255,255,255,.25);text-align:center">
+    המארח פותח את הלוח על הלפטופ.<br>השחקנים נכנסים מהטלפון עם קוד.
+  </div>
+</div>
+
+<!-- ══ HOST LOBBY ══ -->
+<div id="host-lobby" class="screen off">
+  <div class="card" style="max-width:420px;width:96vw">
+    <div class="room-code-box">
+      <div class="room-code-label">קוד כניסה</div>
+      <div class="room-code" id="room-code-display">——</div>
+      <div class="join-url" id="join-url-display"></div>
+    </div>
+    <div class="waiting-hint">שחקנים נכנסים עם הקוד מהטלפון</div>
+    <div class="player-join-list" id="lobby-player-list">
+      <div style="text-align:center;color:rgba(255,255,255,.3);font-size:.85rem;padding:10px">ממתין לשחקנים<span class="connecting-dots"></span></div>
+    </div>
+    <button class="btn btn-gold" id="start-game-btn" onclick="hostStartGame()" disabled>
+      ⚓ התחל משחק!
+    </button>
+    <div style="font-size:.72rem;color:rgba(255,255,255,.3);text-align:center;margin-top:8px">נדרש לפחות שחקן אחד</div>
+  </div>
+</div>
+
+<!-- ══ JOIN SCREEN ══ -->
+<div id="join" class="screen off">
+  <div class="game-logo" style="font-size:2.5rem">🚢</div>
+  <div class="card" style="margin-top:18px">
+    <div class="join-fields">
+      <div>
+        <label>קוד משחק</label>
+        <input class="inp" id="join-code" type="text" placeholder="הכנס קוד..." maxlength="6" oninput="this.value=this.value.toUpperCase()" style="text-align:center;letter-spacing:.2em;font-size:1.4rem;font-weight:700">
+      </div>
+      <div>
+        <label>שמך</label>
+        <input class="inp" id="join-name" type="text" placeholder="שם שחקן" maxlength="16">
+      </div>
+      <button class="btn btn-cyan" id="join-btn" onclick="doJoin()">הצטרף!</button>
+      <button class="btn btn-ghost btn-sm" style="width:100%" onclick="show('landing')">חזרה</button>
+    </div>
+    <div id="join-error" style="color:var(--coral);font-size:.85rem;text-align:center;margin-top:8px;min-height:20px"></div>
+  </div>
+</div>
+
+<!-- ══ PLAYER WAITING ══ -->
+<div id="player-wait" class="screen off">
+  <div style="font-size:3rem;margin-bottom:12px" id="pw-token">🚢</div>
+  <div style="font-size:1.4rem;font-weight:700;margin-bottom:6px" id="pw-name"></div>
+  <div style="color:rgba(255,255,255,.5);margin-bottom:24px">הצטרפת בהצלחה!</div>
+  <div style="font-size:3rem;animation:spin 2s linear infinite">⏳</div>
+  <div style="margin-top:16px;color:rgba(255,255,255,.4);font-size:.9rem">ממתין למארח<span class="connecting-dots"></span></div>
+</div>
+
+<!-- ══ HOST GAME SCREEN ══ -->
+<div id="host-game" class="screen off">
+  <div class="host-sidebar">
+    <div class="hud-card" style="text-align:center">
+      <div class="hud-title">תור של</div>
+      <div class="turn-token" id="hud-token">🚢</div>
+      <div class="turn-name" id="hud-name">—</div>
+    </div>
+    <div class="hud-card">
+      <div class="hud-title">שחקנים</div>
+      <div class="score-list" id="hud-score-list"></div>
+    </div>
+    <div class="status-pill" id="hud-status">ממתין לגלגול...</div>
+    <div class="code-mini">קוד: <span id="hud-code"></span></div>
+  </div>
+  <div class="board-area">
+    <svg id="board-svg" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+</div>
+
+<!-- ══ PLAYER GAME SCREEN ══ -->
+<div id="player-game" class="screen off">
+  <div class="player-header">
+    <div class="ph-token" id="pg-token">🚢</div>
+    <div>
+      <div class="ph-name" id="pg-name">שחקן</div>
+      <div class="ph-pos" id="pg-pos">שדה 1</div>
+    </div>
+    <div class="ph-score" id="pg-score">0 נק׳</div>
+  </div>
+  <div class="player-body" id="player-body">
+    <div class="waiting-msg">
+      <span class="waiting-spinner">⏳</span>
+      ממתין למארח...
+    </div>
+  </div>
+</div>
+
+<!-- ══ WIN SCREEN ══ -->
+<div id="win-screen" class="screen off">
+  <div class="win-ship" id="win-ship">🚢</div>
+  <div class="win-title">🏆 הגענו לנמל! 🏆</div>
+  <div class="win-name" id="win-name"></div>
+  <div style="color:rgba(255,255,255,.5);margin:8px 0 24px">ניצח את המסע!</div>
+  <div class="player-scoreboard" id="win-scoreboard" style="max-width:420px;width:95vw"></div>
+  <button class="btn btn-gold btn-sm" style="margin-top:20px" onclick="location.reload()">🔄 משחק חדש</button>
+</div>
+
+<!-- ══ HOST: EVENT OVERLAY ══ -->
+<div id="ov-event" class="overlay">
+  <div class="ov-card">
+    <div class="ov-emoji" id="ove-emoji">⚡</div>
+    <div class="ov-title" id="ove-title">אירוע!</div>
+    <div class="ov-desc" id="ove-desc"></div>
+    <button class="btn btn-cyan" onclick="hostCloseEvent()">המשך ▶</button>
+  </div>
+</div>
+
+<!-- ══ HOST: QUESTION OVERLAY ══ -->
+<div id="ov-question" class="overlay">
+  <div class="ov-card" style="max-width:500px">
+    <div class="q-category" id="ovq-cat">❓ שאלה</div>
+    <div class="q-timer" id="ovq-timer">15</div>
+    <div class="q-text" id="ovq-text"></div>
+    <div class="q-answers-grid" id="ovq-answers"></div>
+    <div class="answerers-line" id="ovq-answerers"></div>
+    <button class="btn btn-cyan" id="ovq-next" onclick="hostCloseQuestion()" style="display:none">המשך ▶</button>
+  </div>
+</div>
+
+<!-- ══ HOST: SPEED ROUND OVERLAY ══ -->
+<div id="ov-speed" class="overlay">
+  <div class="ov-card" style="max-width:500px">
+    <div style="color:var(--purple);font-size:.8rem;font-weight:700;margin-bottom:6px">⚡ ספיד ראונד</div>
+    <div class="q-timer" id="ovs-timer">10</div>
+    <div style="font-size:.8rem;color:rgba(255,255,255,.4);margin-bottom:8px">שאלה <span id="ovs-qnum">1</span>/3</div>
+    <div class="q-text" id="ovs-text"></div>
+    <div class="q-answers-grid" id="ovs-answers"></div>
+    <div class="answerers-line" id="ovs-answerers"></div>
+    <button class="btn btn-cyan" id="ovs-next" onclick="hostNextSpeedQ()" style="display:none">הבא ▶</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════
+const TILE_COUNT = 30;
+const TOKENS = ['🚢','⛵','🛥️','🚤'];
+const COLORS = ['#4da6ff','#ff6b6b','#ffd700','#00e5a0'];
+
+const TILE_TYPES = [
+  'start','question','storm','treasure','question','whirlpool',
+  'port','speed','storm','treasure','question','whirlpool',
+  'port','speed','storm','treasure','question','speed',
+  'storm','treasure','question','whirlpool','port','speed',
+  'storm','treasure','question','speed','storm','finish'
+];
+
+const TILE_EMOJIS = {start:'🏁',question:'❓',storm:'⚡',treasure:'🎁',whirlpool:'🌀',port:'🏝️',speed:'🎮',finish:'🏆'};
+const TILE_COLORS = {start:'#1a3a6a',question:'#0d3a50',storm:'#4a1a1a',treasure:'#4a3800',whirlpool:'#1a3a4a',port:'#0a3a20',speed:'#2d0d6a',finish:'#5a4000'};
+
+const TURN_QUESTION_TIME = 25;
+const SPEED_QUESTION_TIME = 15;
+const MOVE_STEP_DELAY = 420;
+const POST_ROLL_DELAY = 900;
+const POST_MOVE_DELAY = 1200;
+const WRONG_ANSWER_DELAY = 2200;
+
+const TRIVIA = [
+  // ── הבנה ──
+  {q:'📋 מה ילדים בכפר המנותקים נדרשים לעשות עם הטלפון כשמגיעים למחנה?',a:['להשתמש בו רק בלילה','לשמור אותו במשרד ולהיפרד ממנו לכל השהות','להחזיק אותו אבל לא לגלוש','לכבות אותו אבל להחזיק'],c:1,cat:'הבנה'},
+  {q:'📋 מה ילדים עושים בכפר המנותקים במקום טלפון?',a:['ישנים כל היום','משחקים, יוצרים תוכן ידני ומתחברים פנים אל פנים','צופים בטלוויזיה','לומדים לתכנת מחשבים'],c:1,cat:'הבנה'},
+  {q:'📋 מה הרוב המכריע של ילדים אמרו אחרי שחזרו מהמחנה?',a:['שהתאכזבו מהחוויה','שהתגעגעו לטלפון בכל רגע','שהתרגלו לחיים בלי טלפון והרגישו טוב יותר','שלא ירצו לחזור שוב'],c:2,cat:'הבנה'},
+  {q:'📋 מדוע הורים שולחים ילדים לכפר המנותקים?',a:['כי המחנה זול יותר','כי הם רוצים לשחרר ילדיהם מהתמכרות למסכים','כי אין ברירה אחרת בקיץ','כי המחנה מיועד לילדים עם בעיות'],c:1,cat:'הבנה'},
+  {q:'📋 מה קורה לילדים בתחילת השהות כשנפרדים מהטלפון?',a:['מרגישים שמחים מיד','רובם מתנגדים ומרגישים חרדה וחוסר נוחות','שוכחים לגמרי את הטלפון','מבקשים לחזור הביתה מיד'],c:1,cat:'הבנה'},
+  // ── חשיבה ──
+  {q:'💡 מה מחקר אומר על שימוש מופרז בטלפון אצל בני נוער?',a:['אין שום מידע מחקרי','מחקר מראה שהוא משפר ריכוז וציונים','מחקרים מראים קשר לחרדה, דיכאון וקשיי שינה','הטלפון עוזר לבני נוער ללמוד מהר יותר'],c:2,cat:'חשיבה'},
+  {q:'💡 מה היתרון הגדול של יצירת קשרים חברתיים ללא טכנולוגיה?',a:['אפשר לשמור על מידע אישי יותר בצורה בטוחה','השיחות עמוקות יותר ויש קשב מלא ללא הסחות דעת','קל יותר להכיר אנשים חדשים דרך רשתות חברתיות','אין שום הבדל בין קשר עם וללא טכנולוגיה'],c:1,cat:'חשיבה'},
+  {q:'💡 מה הסיבה שקשה לבני נוער להיפרד מהטלפון?',a:['הטלפון הוא צורך פיזי כמו אוכל','הם ממש לא אוהבים לדבר עם אנשים','הטלפון מספק גירוי מהיר ומתמיד שהמוח מתרגל אליו ומצפה לו','הם רוצים תמיד לעדכן את ההורים'],c:2,cat:'חשיבה'},
+  {q:'💡 מה ההבדל בין "שימוש בטלפון" לבין "התמכרות לטלפון"?',a:['אין שום הבדל','התמכרות היא שימוש יותר מפעם ביום','התמכרות היא כשאי אפשר לשלוט בשימוש, יש חרדה בלעדיו ומזניחים דברים חשובים','שימוש בטלפון הוא תמיד בעיה'],c:2,cat:'חשיבה'},
+  {q:'💡 מה קיים בחוויה של כפר המנותקים שמשנה את יחסם של ילדים לטלפון?',a:['הם לומדים שהטלפון רע לחלוטין','הם חווים שאפשר ליהנות וליצור תוכן גם בלי מסכים','הם מבינים שהטלפון הכרחי לחיים','הם לומדים לתכנת אפליקציות חדשות'],c:1,cat:'חשיבה'},
+  // ── דילמות ──
+  {q:'🤔 חבר מזמין אותך לכפר המנותקים לשבוע — תסכים להיפרד מהטלפון?',a:['לא בחיים, אי אפשר בלי טלפון','כן, אם כולם עושים את זה ביחד אני מסכים לנסות','רק אם אוכל להחזיק את הטלפון בלי להשתמש','לא, כי ההורים לא יאשרו'],c:1,cat:'דילמה'},
+  {q:'🤔 מה הכי קשה לשחרר אם תהיה ללא טלפון שבוע שלם?',a:['גישה למפות וניווט','הרצון לדעת מה קורה ברשתות ולעדכן חברים','היכולת לצלם תמונות','גישה למוזיקה'],c:1,cat:'דילמה'},
+  {q:'🤔 מה עדיף שיהיה במחנה קיץ?',a:['טלפון חופשי לכולם בכל עת','טלפון רק בשעות מוגדרות ביום','ללא טלפון בכלל לכל השהות','כל אחד מחליט לבד'],c:2,cat:'דילמה'},
+  {q:'🤔 את מי הכי תתגעגע אליו אחרי שבוע ללא טלפון?',a:['לאינסטגרם ולטיקטוק','לחברים שרק מתקשרים בוואטסאפ ולא פנים אל פנים','לחברים שפוגשים בחיים האמיתיים ממילא','לא תתגעגע לשום דבר'],c:1,cat:'דילמה'},
+  {q:'🤔 לאחר שבוע בכפר, חבר שואל "האם כדאי לוותר על הטלפון?" — מה תענה?',a:['בשום אופן לא, זה היה נורא','כן, שווה לנסות — למדתי להתרגל ולגלות שיש חוויות שקיימות רק בלי מסך','לא יודע, תלוי בבן אדם','כן, אבל רק לילדים קטנים'],c:1,cat:'דילמה'},
+];
+
+// ═══════════════════════════════════════════
+// AUDIO
+// ═══════════════════════════════════════════
+const AC = new (window.AudioContext || window.webkitAudioContext)();
+document.addEventListener('click',()=>{if(AC.state==='suspended')AC.resume();},{once:true});
+
+function tone(freq,dur,type='sine',vol=0.28){
+  try{
+    const o=AC.createOscillator(),g=AC.createGain();
+    o.connect(g);g.connect(AC.destination);
+    o.type=type;o.frequency.setValueAtTime(freq,AC.currentTime);
+    g.gain.setValueAtTime(vol,AC.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,AC.currentTime+dur);
+    o.start();o.stop(AC.currentTime+dur);
+  }catch(e){}
+}
+const sfx={
+  click:()=>tone(600,.06,'sine',.15),
+  dice:()=>[200,300,180,400,250].forEach((f,i)=>setTimeout(()=>tone(f,.05,'square',.18),i*60)),
+  correct:()=>[523,659,784].forEach((f,i)=>setTimeout(()=>tone(f,.18,'sine',.28),i*120)),
+  wrong:()=>tone(150,.3,'sawtooth',.22),
+  move:()=>tone(440,.1,'triangle',.18),
+  win:()=>[523,659,784,1047,784,1047,1175].forEach((f,i)=>setTimeout(()=>tone(f,.25,'sine',.3),i*150)),
+  tick:()=>tone(880,.06,'sine',.1),
+};
+
+// ═══════════════════════════════════════════
+// SCREEN NAV
+// ═══════════════════════════════════════════
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.add('off'));
+  document.getElementById(id).classList.remove('off');
+}
+
+// ═══════════════════════════════════════════
+// PEER STATE
+// ═══════════════════════════════════════════
+let myRole = 'none'; // 'host' | 'player'
+let myPeer = null;
+let hostConn = null;         // player → host connection
+let playerConns = {};        // host: peerId → DataConnection
+let roomCode = '';
+
+// ═══════════════════════════════════════════
+// GAME STATE (authoritative on host)
+// ═══════════════════════════════════════════
+let G = {
+  players: [],  // {id,name,token,color,position,score,connected}
+  currentIdx: 0,
+  phase: 'lobby',
+  triviaPool: [],
+  speedPool: [],
+  speedScores: {},
+  speedQIdx: 0,
+  speedQuestions: [],
+  currentQ: null,
+  answers: {},   // peerId → {choice, time}
+  firstCorrect: null,
+  rollGate: false,
+  rollGateCorrect: false,
+  rollUnlockedFor: null,
+};
+
+// ═══════════════════════════════════════════
+// HOST SETUP
+// ═══════════════════════════════════════════
+function goHost(){
+  sfx.click();
+  show('host-lobby');
+  const code = randomCode();
+  roomCode = code;
+  myRole = 'host';
+  document.getElementById('room-code-display').textContent = code;
+  document.getElementById('hud-code').textContent = code;
+
+  const url = location.href.split('#')[0];
+  document.getElementById('join-url-display').textContent = url + ' → קוד: ' + code;
+
+  myPeer = new Peer('kruz-' + code, {debug:0});
+  myPeer.on('open', ()=>{
+    console.log('Host peer open:', myPeer.id);
+  });
+  myPeer.on('connection', onPlayerConnect);
+  myPeer.on('error', e=>{
+    if(e.type==='unavailable-id'){
+      // Code taken — try new one
+      goHost();
+    }
+  });
+
+  G.triviaPool = shuffle([...TRIVIA]);
+  G.speedPool = shuffle([...TRIVIA]);
+  G.players = [];
+}
+
+function onPlayerConnect(conn){
+  conn.on('open',()=>{
+    console.log('Player connected:', conn.peer);
+    conn.on('data', d=>onPlayerData(conn.peer, d));
+    conn.on('close', ()=>onPlayerDisconnect(conn.peer));
+  });
+  conn.on('error', e=>console.warn('conn error',e));
+}
+
+function onPlayerData(peerId, data){
+  if(data.type === 'join'){
+    const idx = TOKENS.indexOf(data.token) !== -1 ? TOKENS.indexOf(data.token) : G.players.length % TOKENS.length;
+    G.players.push({
+      id: peerId,
+      name: data.name,
+      token: TOKENS[G.players.length % TOKENS.length],
+      color: COLORS[G.players.length % COLORS.length],
+      position: 0,
+      score: 0,
+      connected: true,
+    });
+    playerConns[peerId] = myPeer.connections[peerId]?.[0] || findConn(peerId);
+    updateLobbyUI();
+    sendToPlayer(peerId, {type:'joined', player: G.players[G.players.length-1], players: G.players});
+  }
+
+  if(data.type === 'roll'){
+    if(G.phase !== 'roll') return;
+    const p = G.players[G.currentIdx];
+    if(p.id !== peerId) return;
+    if(G.rollUnlockedFor !== peerId) return;
+    G.rollUnlockedFor = null;
+    hostDoRoll();
+  }
+
+  if(data.type === 'answer'){
+    if(G.phase !== 'question' && G.phase !== 'speed') return;
+    const activePeer = G.players[G.currentIdx]?.id;
+    if(G.rollGate && activePeer !== peerId) return;
+    if(G.answers[peerId] !== undefined) return; // already answered
+    G.answers[peerId] = {choice: data.choice, time: Date.now()};
+    hostUpdateAnswerCount();
+    // Check if all connected players answered
+    const expectedAnswers = G.rollGate ? 1 : G.players.filter(p=>p.connected).length;
+    if(Object.keys(G.answers).length >= expectedAnswers){
+      if(G.phase === 'speed') hostRevealSpeedQ();
+      else hostRevealQuestion();
+    }
+  }
+}
+
+function findConn(peerId){
+  const conns = myPeer.connections[peerId];
+  return conns && conns.length ? conns[0] : null;
+}
+
+function onPlayerDisconnect(peerId){
+  const p = G.players.find(x=>x.id===peerId);
+  if(p) p.connected = false;
+  updateLobbyUI();
+  renderHostScores();
+}
+
+function sendToPlayer(peerId, data){
+  const conns = myPeer.connections[peerId];
+  if(conns && conns.length){
+    try{ conns[0].send(data); }catch(e){}
+  }
+}
+
+function broadcast(data){
+  G.players.forEach(p=> sendToPlayer(p.id, data));
+}
+
+function updateLobbyUI(){
+  const list = document.getElementById('lobby-player-list');
+  if(!list) return;
+  if(G.players.length === 0){
+    list.innerHTML='<div style="text-align:center;color:rgba(255,255,255,.3);font-size:.85rem;padding:10px">ממתין לשחקנים<span class="connecting-dots"></span></div>';
+  } else {
+    list.innerHTML = G.players.map((p,i)=>`
+      <div class="player-join-item">
+        <div class="pji-token">${p.token}</div>
+        <div class="pji-name" style="color:${p.color}">${p.name}</div>
+        <div class="pji-badge">מחובר ✓</div>
+      </div>`).join('');
+  }
+  document.getElementById('start-game-btn').disabled = G.players.length < 1;
+}
+
+// ═══════════════════════════════════════════
+// HOST: START GAME
+// ═══════════════════════════════════════════
+function hostStartGame(){
+  sfx.click();
+  G.phase = 'starting';
+  G.currentIdx = 0;
+  G.rollGate = false;
+  G.rollGateCorrect = false;
+  G.rollUnlockedFor = null;
+  buildBoard();
+  renderHostScores();
+  show('host-game');
+  broadcast({type:'gameStart', players: G.players});
+  hostSetTurn();
+}
+
+function hostSetTurn(){
+  G.phase = 'question';
+  G.answers = {};
+  G.rollGate = true;
+  G.rollGateCorrect = false;
+  G.rollUnlockedFor = null;
+  const p = G.players[G.currentIdx];
+  document.getElementById('hud-token').textContent = p.token;
+  document.getElementById('hud-name').textContent = p.name;
+  document.getElementById('hud-name').style.color = p.color;
+  document.getElementById('hud-status').textContent = `${p.name} עונה על שאלת כניסה לגלגול...`;
+  renderHostScores();
+  broadcast({type:'turnQuestion', currentIdx: G.currentIdx, players: G.players});
+  hostStartQuestion({rollGate:true});
+}
+
+// ═══════════════════════════════════════════
+// HOST: DICE + MOVEMENT
+// ═══════════════════════════════════════════
+function hostDoRoll(){
+  const val = Math.floor(Math.random()*6)+1;
+  sfx.dice();
+  broadcast({type:'rolled', dice: val, playerIdx: G.currentIdx});
+  document.getElementById('hud-status').textContent = `🎲 ${val}`;
+  setTimeout(()=>hostMovePlayer(val), POST_ROLL_DELAY);
+}
+
+async function hostMovePlayer(steps){
+  G.phase = 'moving';
+  const p = G.players[G.currentIdx];
+  const target = Math.min(p.position + steps, TILE_COUNT - 1);
+
+  for(let i = p.position+1; i<=target; i++){
+    p.position = i;
+    sfx.move();
+    renderTokens();
+    renderHostScores();
+    await delay(MOVE_STEP_DELAY);
+  }
+
+  broadcast({type:'moved', players: G.players});
+
+  if(p.position >= TILE_COUNT-1){
+    await delay(POST_MOVE_DELAY);
+    hostWin(G.currentIdx);
+    return;
+  }
+
+  await delay(POST_MOVE_DELAY);
+  hostLandTile();
+}
+
+function hostLandTile(){
+  const p = G.players[G.currentIdx];
+  const type = TILE_TYPES[p.position] || 'port';
+  switch(type){
+    case 'question': hostDocksideRiddle(); break;
+    case 'speed':    hostStartSpeed(); break;
+    case 'storm':    hostStorm(); break;
+    case 'treasure': hostTreasure(); break;
+    case 'whirlpool':hostWhirlpool(); break;
+    case 'port':
+      showHostEvent('🏝️','תחנת נמל!',`${p.name} עוגן בנמל לנוח. המשיכו!`);
+      break;
+    default: hostNextTurn();
+  }
+}
+
+// ═══════════════════════════════════════════
+// HOST: EVENTS
+// ═══════════════════════════════════════════
+let _eventCb = null;
+function showHostEvent(emoji,title,desc,cb){
+  document.getElementById('ove-emoji').textContent=emoji;
+  document.getElementById('ove-title').textContent=title;
+  document.getElementById('ove-desc').textContent=desc;
+  _eventCb = cb || hostNextTurn;
+  document.getElementById('ov-event').classList.add('show');
+  broadcast({type:'event',emoji,title,desc});
+}
+function hostCloseEvent(){
+  sfx.click();
+  document.getElementById('ov-event').classList.remove('show');
+  broadcast({type:'eventDone'});
+  if(_eventCb){_eventCb();_eventCb=null;}
+}
+
+function hostStorm(){
+  const p = G.players[G.currentIdx];
+  const r = Math.floor(Math.random()*3);
+  if(r===0){
+    p.position = Math.max(0, p.position-2);
+    renderTokens(); renderHostScores();
+    broadcast({type:'moved',players:G.players});
+    showHostEvent('⚡','סופה!',`${p.name} נתקע בסופה! אחורה 2 שדות. 😱`);
+  } else if(r===1){
+    p._skipTurn = true;
+    showHostEvent('⚡','סופה!',`${p.name} מחכה שהסופה תעבור — מדלג תור! 😰`);
+  } else {
+    const others = G.players.filter((_,i)=>i!==G.currentIdx && _.connected);
+    if(others.length){
+      const tgt = others[Math.floor(Math.random()*others.length)];
+      const ti = G.players.indexOf(tgt);
+      const tmp = p.position;
+      G.players[G.currentIdx].position = tgt.position;
+      G.players[ti].position = tmp;
+      renderTokens(); renderHostScores();
+      broadcast({type:'moved',players:G.players});
+      showHostEvent('⚡','סופה!',`הסופה מחליפה בין ${p.name} ל${tgt.name}! 🌪️`);
+    } else {
+      p.position = Math.max(0,p.position-1);
+      renderTokens(); renderHostScores();
+      broadcast({type:'moved',players:G.players});
+      showHostEvent('⚡','סופה!','אחורה שדה אחד!');
+    }
+  }
+}
+
+function hostTreasure(){
+  const p = G.players[G.currentIdx];
+  const bonus = [2,3][Math.floor(Math.random()*2)];
+  p.position = Math.min(p.position+bonus, TILE_COUNT-1);
+  p.score += 2;
+  renderTokens(); renderHostScores();
+  broadcast({type:'moved',players:G.players});
+  if(p.position >= TILE_COUNT-1){
+    showHostEvent('🎁','אוצר!',`${p.name} מצא אוצר ועשה ${bonus} צעדים — הגיע לסוף!`,()=>hostWin(G.currentIdx));
+  } else {
+    showHostEvent('🎁','אוצר!',`${p.name} מצא אוצר! קדימה ${bonus} שדות! 💰`);
+  }
+}
+
+function hostWhirlpool(){
+  const p = G.players[G.currentIdx];
+  const newPos = Math.floor(Math.random()*(TILE_COUNT-2))+1;
+  p.position = newPos;
+  renderTokens(); renderHostScores();
+  broadcast({type:'moved',players:G.players});
+  showHostEvent('🌀','מערבולת!',`${p.name} נסחף למערבולת! מתעורר בשדה ${newPos+1}. 🌀`);
+}
+
+function hostDocksideRiddle(){
+  const p = G.players[G.currentIdx];
+  p.score += 1;
+  renderHostScores();
+  broadcast({type:'moved',players:G.players});
+  showHostEvent('❓','חידת רציף!',`${p.name} הגיע לרציף החידות ומקבל נקודה על ניווט חכם. ממשיכים לתור הבא.`);
+}
+
+// ═══════════════════════════════════════════
+// HOST: QUESTION
+// ═══════════════════════════════════════════
+let _qTimer = null;
+let _qTimeLeft = 0;
+let _qRevealed = false;
+
+function hostStartQuestion(opts = {}){
+  G.phase = 'question';
+  G.answers = {};
+  G.rollGate = opts.rollGate === true;
+  G.rollGateCorrect = false;
+  if(!G.rollGate) G.rollUnlockedFor = null;
+
+  if(G.triviaPool.length === 0) G.triviaPool = shuffle([...TRIVIA]);
+  const q = G.triviaPool.pop();
+  G.currentQ = q;
+
+  const timeLimit = TURN_QUESTION_TIME;
+  _qTimeLeft = timeLimit;
+  _qRevealed = false;
+
+  const activePlayer = G.players[G.currentIdx];
+  document.getElementById('ovq-cat').textContent = G.rollGate
+    ? `⚓ שאלת הפלגה - ${activePlayer.name} מגלגל רק אם הוא עונה נכון`
+    : '❓ ' + q.cat;
+  document.getElementById('ovq-timer').textContent = timeLimit;
+  document.getElementById('ovq-timer').classList.remove('urgent');
+  document.getElementById('ovq-text').textContent = q.q;
+  document.getElementById('ovq-answerers').textContent = '';
+  document.getElementById('ovq-next').style.display = 'none';
+
+  const shapes = ['▲','◆','●','■'];
+  const shapeClasses = ['sh-red','sh-blue','sh-gold','sh-green'];
+  document.getElementById('ovq-answers').innerHTML = q.a.map((a,i)=>`
+    <div class="q-ans-host" id="ovq-ans-${i}">
+      <div class="ans-shape ${shapeClasses[i]}">${shapes[i]}</div>
+      <span>${a}</span>
+    </div>`).join('');
+
+  document.getElementById('ov-question').classList.add('show');
+  broadcast({
+    type:'question',
+    q:q.q,
+    a:q.a,
+    cat:q.cat,
+    timeLimit,
+    isSpeed:false,
+    targetId: G.rollGate ? activePlayer.id : null,
+    rollGate: G.rollGate,
+  });
+
+  clearInterval(_qTimer);
+  _qTimer = setInterval(()=>{
+    _qTimeLeft--;
+    const el = document.getElementById('ovq-timer');
+    if(el){
+      el.textContent = _qTimeLeft;
+      if(_qTimeLeft<=5) el.classList.add('urgent');
+    }
+    sfx.tick();
+    if(_qTimeLeft<=0){
+      clearInterval(_qTimer);
+      if(!_qRevealed) hostRevealQuestion();
+    }
+  }, 1000);
+}
+
+function hostUpdateAnswerCount(){
+  const count = Object.keys(G.answers).length;
+  const total = G.rollGate ? 1 : G.players.filter(p=>p.connected).length;
+  const elId = G.phase==='speed' ? 'ovs-answerers' : 'ovq-answerers';
+  const el = document.getElementById(elId);
+  if(el) el.textContent = `${count}/${total} ענו`;
+}
+
+function hostRevealQuestion(){
+  if(_qRevealed) return;
+  _qRevealed = true;
+  clearInterval(_qTimer);
+
+  const q = G.currentQ;
+
+  // Show correct answer on host overlay
+  q.a.forEach((_,i)=>{
+    const el = document.getElementById(`ovq-ans-${i}`);
+    if(!el) return;
+    el.classList.add('revealed');
+    el.classList.add(i===q.c ? 'correct-ans':'wrong-ans');
+  });
+
+  // Determine results
+  let results = G.players.map(p=>{
+    const ans = G.answers[p.id];
+    const correct = ans !== undefined && ans.choice === q.c;
+    return {id:p.id, name:p.name, correct, time: ans ? ans.time : Infinity};
+  });
+
+  // Award points only here. Movement is decided after the reveal.
+  results.filter(r=>r.correct).sort((a,b)=>a.time-b.time).forEach((r,i)=>{
+    const p = G.players.find(x=>x.id===r.id);
+    if(p){
+      p.score += (i===0 ? 2 : 1);
+    }
+  });
+
+  if(G.rollGate){
+    const active = G.players[G.currentIdx];
+    const activeResult = results.find(r=>r.id === active.id);
+    G.rollGateCorrect = !!activeResult?.correct;
+  }
+
+  renderHostScores();
+  renderTokens();
+  broadcast({type:'moved', players:G.players});
+
+  const line = document.getElementById('ovq-answerers');
+  const correctNames = results.filter(r=>r.correct).map(r=>r.name);
+  if(line) line.textContent = correctNames.length ? `✅ צדקו: ${correctNames.join(', ')}` : '❌ אף אחד לא צדק';
+
+  broadcast({type:'questionResult', correct:q.c, scores: G.players.map(p=>({id:p.id,score:p.score,position:p.position}))});
+
+  document.getElementById('ovq-next').style.display = 'block';
+}
+
+function hostCloseQuestion(){
+  sfx.click();
+  document.getElementById('ov-question').classList.remove('show');
+  broadcast({type:'questionDone'});
+
+  if(G.rollGate){
+    const canRoll = G.rollGateCorrect;
+    const p = G.players[G.currentIdx];
+    G.rollGate = false;
+    G.rollGateCorrect = false;
+
+    if(canRoll){
+      G.phase = 'roll';
+      G.rollUnlockedFor = p.id;
+      document.getElementById('hud-status').textContent = `${p.name} ענה נכון ויכול לגלגל`;
+      broadcast({type:'yourTurn', currentIdx: G.currentIdx, players: G.players});
+    } else {
+      G.rollUnlockedFor = null;
+      document.getElementById('hud-status').textContent = `${p.name} טעה, לא מגלגל ונשאר במקום`;
+      broadcast({type:'moved', players:G.players});
+      setTimeout(hostNextTurn, WRONG_ANSWER_DELAY);
+    }
+    return;
+  }
+
+  const p = G.players[G.currentIdx];
+  if(p.position >= TILE_COUNT-1){
+    hostWin(G.currentIdx);
+  } else {
+    hostNextTurn();
+  }
+}
+
+// ═══════════════════════════════════════════
+// HOST: SPEED ROUND (minigame replacement)
+// ═══════════════════════════════════════════
+function hostStartSpeed(){
+  G.phase = 'speed';
+  G.speedScores = {};
+  G.speedQIdx = 0;
+  G.speedQuestions = shuffle([...TRIVIA]).slice(0,3);
+  G.triviaPool = G.speedQuestions.reduce((pool,q)=>{
+    return pool.filter(x=>x!==q);
+  }, G.triviaPool); // avoid duplicates
+
+  broadcast({type:'speedRoundStart'});
+  showHostEvent('🎮','ספיד ראונד! ⚡','3 שאלות מהירות — הכי הרבה צדקו מקבלים 3 שדות קדימה!',()=>{
+    hostNextSpeedQ();
+  });
+}
+
+function hostNextSpeedQ(){
+  if(G.speedQIdx >= 3){
+    // Speed round done
+    document.getElementById('ov-speed').classList.remove('show');
+    hostSpeedRoundEnd();
+    return;
+  }
+
+  G.answers = {};
+  G.currentQ = G.speedQuestions[G.speedQIdx];
+
+  const q = G.currentQ;
+  const timeLimit = SPEED_QUESTION_TIME;
+  _qTimeLeft = timeLimit;
+  _qRevealed = false;
+
+  document.getElementById('ovs-qnum').textContent = G.speedQIdx+1;
+  document.getElementById('ovs-timer').textContent = timeLimit;
+  document.getElementById('ovs-timer').classList.remove('urgent');
+  document.getElementById('ovs-text').textContent = q.q;
+  document.getElementById('ovs-answerers').textContent = '';
+  document.getElementById('ovs-next').style.display = 'none';
+
+  const shapes=['▲','◆','●','■'];
+  const shapeClasses=['sh-red','sh-blue','sh-gold','sh-green'];
+  document.getElementById('ovs-answers').innerHTML = q.a.map((a,i)=>`
+    <div class="q-ans-host" id="ovs-ans-${i}">
+      <div class="ans-shape ${shapeClasses[i]}">${shapes[i]}</div>
+      <span>${a}</span>
+    </div>`).join('');
+
+  document.getElementById('ov-speed').classList.add('show');
+  broadcast({type:'question', q:q.q, a:q.a, cat:'ספיד ראונד', timeLimit, isSpeed:true});
+
+  clearInterval(_qTimer);
+  _qTimer = setInterval(()=>{
+    _qTimeLeft--;
+    const el = document.getElementById('ovs-timer');
+    if(el){
+      el.textContent = _qTimeLeft;
+      if(_qTimeLeft<=3) el.classList.add('urgent');
+    }
+    sfx.tick();
+    if(_qTimeLeft<=0){
+      clearInterval(_qTimer);
+      if(!_qRevealed) hostRevealSpeedQ();
+    }
+  },1000);
+}
+
+function hostRevealSpeedQ(){
+  if(_qRevealed) return;
+  _qRevealed = true;
+  clearInterval(_qTimer);
+
+  const q = G.currentQ;
+  q.a.forEach((_,i)=>{
+    const el = document.getElementById(`ovs-ans-${i}`);
+    if(el){
+      el.classList.add('revealed');
+      el.classList.add(i===q.c?'correct-ans':'wrong-ans');
+    }
+  });
+
+  let results = G.players.map(p=>{
+    const ans = G.answers[p.id];
+    const correct = ans!==undefined && ans.choice===q.c;
+    return {id:p.id, correct, time: ans?ans.time:Infinity};
+  });
+
+  results.filter(r=>r.correct).sort((a,b)=>a.time-b.time).forEach((r,i)=>{
+    G.speedScores[r.id] = (G.speedScores[r.id]||0) + (i===0?2:1);
+  });
+
+  const line = document.getElementById('ovs-answerers');
+  const correctNames = results.filter(r=>r.correct).map(r=>G.players.find(p=>p.id===r.id)?.name).filter(Boolean);
+  if(line) line.textContent = correctNames.length ? `✅ ${correctNames.join(', ')}` : '❌ אף אחד';
+
+  broadcast({type:'questionResult', correct:q.c, scores:G.players.map(p=>({id:p.id,score:p.score,position:p.position})), speedScores:G.speedScores});
+
+  G.speedQIdx++;
+  document.getElementById('ovs-next').style.display = 'block';
+}
+
+function hostSpeedRoundEnd(){
+  // Find winner of speed round (most speed score)
+  let bestScore = -1, winners = [];
+  G.players.forEach(p=>{
+    const s = G.speedScores[p.id]||0;
+    if(s > bestScore){ bestScore=s; winners=[p]; }
+    else if(s===bestScore && bestScore>0){ winners.push(p); }
+  });
+
+  winners.forEach(w=>{
+    w.position = Math.min(w.position+3, TILE_COUNT-1);
+    w.score += 3;
+  });
+  renderTokens(); renderHostScores();
+  broadcast({type:'moved',players:G.players});
+
+  const winnerNames = winners.map(w=>w.name).join(' ו');
+  const checkWin = winners.find(w=>w.position>=TILE_COUNT-1);
+  showHostEvent('🎮','תוצאות ספיד ראונד!',
+    `${winnerNames} ניצח${winners.length>1?'ו':''} וקיבל${winners.length>1?'ו':''} 3 שדות קדימה! 🏅`,
+    ()=>{
+      if(checkWin) hostWin(G.players.indexOf(checkWin));
+      else hostNextTurn();
+    });
+}
+
+// ═══════════════════════════════════════════
+// HOST: NEXT TURN
+// ═══════════════════════════════════════════
+function hostNextTurn(){
+  G.rollGate = false;
+  G.rollGateCorrect = false;
+  G.rollUnlockedFor = null;
+  G.currentIdx = (G.currentIdx+1) % G.players.length;
+  // Skip disconnected players
+  let attempts = 0;
+  while(!G.players[G.currentIdx].connected && attempts < G.players.length){
+    G.currentIdx = (G.currentIdx+1) % G.players.length;
+    attempts++;
+  }
+  // Handle skip turn
+  const p = G.players[G.currentIdx];
+  if(p._skipTurn){
+    p._skipTurn = false;
+    broadcast({type:'skippedTurn', playerName: p.name});
+    hostNextTurn();
+    return;
+  }
+  hostSetTurn();
+}
+
+// ═══════════════════════════════════════════
+// HOST: WIN
+// ═══════════════════════════════════════════
+function hostWin(idx){
+  G.phase = 'win';
+  const p = G.players[idx];
+  sfx.win();
+  broadcast({type:'win', winner:{name:p.name, token:p.token, id:p.id}, players:G.players});
+  showWinScreen(p, G.players);
+}
+
+function showWinScreen(winner, players){
+  document.getElementById('win-ship').textContent = winner.token;
+  document.getElementById('win-name').textContent = winner.name;
+  const sorted = [...players].sort((a,b)=>b.score-a.score);
+  document.getElementById('win-scoreboard').innerHTML = sorted.map((p,i)=>`
+    <div class="psb-row">
+      <div class="psb-rank">${i===0?'🥇':i===1?'🥈':i===2?'🥉':'🏅'}</div>
+      <div class="psb-tok">${p.token}</div>
+      <div class="psb-name" style="color:${p.color}">${p.name}</div>
+      <div class="psb-pts">${p.score} נק׳</div>
+      <div class="psb-pos">שדה ${p.position+1}</div>
+    </div>`).join('');
+  confetti();
+  show('win-screen');
+}
+
+// ═══════════════════════════════════════════
+// HOST: BOARD
+// ═══════════════════════════════════════════
+const TILE_POS = (() => {
+  const cols=5, rows=6, startX=56, startY=474, sx=82, sy=84;
+  const pos=[];
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const col = r%2===0 ? c : cols-1-c;
+      pos.push({x:startX+col*sx, y:startY-r*sy});
+    }
+  }
+  return pos.slice(0,TILE_COUNT);
+})();
+
+function buildBoard(){
+  const svg = document.getElementById('board-svg');
+  svg.innerHTML='';
+  const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+  svg.appendChild(defs);
+
+  // Background
+  svg.appendChild(svgEl('rect',{x:0,y:0,width:520,height:520,fill:'#05101f',rx:18}));
+
+  // Wave lines
+  for(let i=0;i<5;i++){
+    svg.appendChild(svgEl('path',{
+      d:`M0 ${90+i*80} Q130 ${72+i*80} 260 ${90+i*80} T520 ${90+i*80}`,
+      stroke:`rgba(0,80,160,${0.08+i*.01})`,
+      'stroke-width':1.5, fill:'none'
+    }));
+  }
+
+  // Path lines
+  for(let i=0;i<TILE_COUNT-1;i++){
+    const a=TILE_POS[i], b=TILE_POS[i+1];
+    svg.appendChild(svgEl('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,
+      stroke:'rgba(0,180,220,0.2)','stroke-width':3,'stroke-dasharray':'7 5'}));
+  }
+
+  // Tiles
+  TILE_POS.forEach((pos,idx)=>{
+    const type = TILE_TYPES[idx]||'port';
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+
+    g.appendChild(svgEl('circle',{
+      cx:pos.x,cy:pos.y,r:24,
+      fill:TILE_COLORS[type]||'#1a3060',
+      stroke: idx===0?'var(--mint)':idx===TILE_COUNT-1?'var(--gold)':'rgba(0,180,220,.35)',
+      'stroke-width':idx===0||idx===TILE_COUNT-1?2.5:1.2
+    }));
+    // Number
+    const num=document.createElementNS('http://www.w3.org/2000/svg','text');
+    num.setAttribute('x',pos.x);num.setAttribute('y',pos.y-12);
+    num.setAttribute('text-anchor','middle');num.setAttribute('fill','rgba(255,255,255,.4)');
+    num.setAttribute('font-size','7');num.setAttribute('font-family','Heebo');
+    num.textContent=idx+1;
+    g.appendChild(num);
+    // Emoji
+    const em=document.createElementNS('http://www.w3.org/2000/svg','text');
+    em.setAttribute('x',pos.x);em.setAttribute('y',pos.y+6);
+    em.setAttribute('text-anchor','middle');em.setAttribute('font-size','14');
+    em.textContent=TILE_EMOJIS[type]||'🏝️';
+    g.appendChild(em);
+    svg.appendChild(g);
+  });
+
+  // Token group
+  const tokG = document.createElementNS('http://www.w3.org/2000/svg','g');
+  tokG.id='token-group';
+  svg.appendChild(tokG);
+  renderTokens();
+}
+
+function renderTokens(){
+  const g = document.getElementById('token-group');
+  if(!g) return;
+  g.innerHTML='';
+  const offsets=[{dx:-10,dy:-10},{dx:10,dy:-10},{dx:-10,dy:10},{dx:10,dy:10}];
+  G.players.forEach((p,i)=>{
+    const pos = TILE_POS[Math.min(p.position,TILE_COUNT-1)];
+    const off = offsets[i]||{dx:0,dy:0};
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x', pos.x+off.dx);
+    t.setAttribute('y', pos.y+off.dy+4);
+    t.setAttribute('text-anchor','middle');
+    t.setAttribute('font-size','16');
+    t.setAttribute('filter','drop-shadow(0 2px 3px rgba(0,0,0,.6))');
+    t.textContent=p.token;
+    g.appendChild(t);
+  });
+}
+
+function renderHostScores(){
+  const list = document.getElementById('hud-score-list');
+  if(!list) return;
+  list.innerHTML=G.players.map((p,i)=>`
+    <div class="score-row ${i===G.currentIdx&&G.phase!=='lobby'?'active-turn':''}">
+      <div class="score-tok">${p.token}</div>
+      <div>
+        <div class="score-name" style="color:${p.color}">${p.name}</div>
+        <div class="score-pos">שדה ${p.position+1}/30</div>
+      </div>
+      <div>
+        <div class="score-pts">${p.score} נק׳</div>
+        ${!p.connected?'<div style="font-size:.65rem;color:var(--coral)">נותק</div>':''}
+      </div>
+    </div>`).join('');
+}
+
+function svgEl(tag, attrs){
+  const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+  return el;
+}
+
+// ═══════════════════════════════════════════
+// JOIN (PLAYER SIDE)
+// ═══════════════════════════════════════════
+function showJoin(){
+  sfx.click();
+  show('join');
+  // Auto-fill from URL hash
+  const hash = location.hash.replace('#','');
+  if(hash.length===6) document.getElementById('join-code').value=hash.toUpperCase();
+}
+
+function doJoin(){
+  sfx.click();
+  const code = document.getElementById('join-code').value.trim().toUpperCase();
+  const name = document.getElementById('join-name').value.trim();
+  const err  = document.getElementById('join-error');
+
+  if(!code || code.length<4){ err.textContent='הכנס קוד תקין'; return; }
+  if(!name){ err.textContent='הכנס שם'; return; }
+
+  err.textContent='מתחבר...';
+  document.getElementById('join-btn').disabled=true;
+
+  myRole='player';
+  myPeer = new Peer(undefined, {debug:0});
+  myPeer.on('open', id=>{
+    hostConn = myPeer.connect('kruz-'+code, {reliable:true});
+    hostConn.on('open',()=>{
+      hostConn.send({type:'join', name});
+      err.textContent='';
+    });
+    hostConn.on('data', onHostData);
+    hostConn.on('error', e=>{
+      err.textContent='שגיאת חיבור: '+e.type;
+      document.getElementById('join-btn').disabled=false;
+    });
+    hostConn.on('close',()=>{
+      if(myRole==='player') err.textContent='החיבור נסגר';
+    });
+  });
+  myPeer.on('error', e=>{
+    if(e.type==='peer-unavailable'){
+      err.textContent='קוד לא נמצא. בדוק שוב.';
+    } else {
+      err.textContent='שגיאה: '+e.type;
+    }
+    document.getElementById('join-btn').disabled=false;
+  });
+}
+
+// ═══════════════════════════════════════════
+// PLAYER: RECEIVE FROM HOST
+// ═══════════════════════════════════════════
+let myPlayerData = null; // {id,name,token,color,position,score}
+let playerPhase = 'wait';
+let myAnsweredThisQ = false;
+let playerQTimer = null;
+
+function onHostData(data){
+  switch(data.type){
+
+    case 'joined':
+      myPlayerData = data.player;
+      document.getElementById('pw-token').textContent = data.player.token;
+      document.getElementById('pw-name').textContent = data.player.name;
+      show('player-wait');
+      break;
+
+    case 'gameStart':
+      syncPlayerData(data.players);
+      show('player-game');
+      playerPhase='wait';
+      renderPlayerHeader();
+      renderPlayerBody_wait('המשחק התחיל!');
+      break;
+
+    case 'turnQuestion':
+      syncPlayerData(data.players);
+      myAnsweredThisQ=false;
+      playerPhase='watch';
+      renderPlayerHeader();
+      renderPlayerBody_wait(`שאלת כניסה לגלגול: ${data.players[data.currentIdx]?.name||''}`);
+      break;
+
+    case 'yourTurn':
+      syncPlayerData(data.players);
+      myAnsweredThisQ=false;
+      const isMine = data.players[data.currentIdx]?.id === myPlayerData?.id;
+      playerPhase = isMine ? 'roll' : 'watch';
+      renderPlayerHeader();
+      renderPlayerBody_turn(data.players[data.currentIdx]?.name||'', isMine);
+      break;
+
+    case 'rolled':
+      syncPlayerData(data.players||[]);
+      renderPlayerBody_wait(`🎲 ${data.dice} — מפליגים על הלוח...`);
+      break;
+
+    case 'moved':
+      syncPlayerData(data.players);
+      renderPlayerHeader();
+      break;
+
+    case 'event':
+      playerPhase='event';
+      renderPlayerBody_event(data.emoji, data.title, data.desc);
+      break;
+
+    case 'eventDone':
+      renderPlayerBody_wait('ממתין לתור הבא...');
+      break;
+
+    case 'question':
+      myAnsweredThisQ = false;
+      G._lastAnswer = undefined;
+      playerPhase = 'question';
+      if(data.rollGate && data.targetId !== myPlayerData?.id){
+        renderPlayerBody_wait('השחקן שבתור עונה כדי לפתוח גלגול...');
+      } else {
+        renderPlayerBody_question(data.q, data.a, data.timeLimit, data.isSpeed, data.rollGate);
+      }
+      break;
+
+    case 'questionResult':
+      if(data.scores){
+        data.scores.forEach(s=>{
+          if(myPlayerData?.id===s.id){ myPlayerData.score=s.score; myPlayerData.position=s.position; }
+        });
+      }
+      renderPlayerHeader();
+      // Determine correctness: compare what we sent vs what host revealed
+      const wasCorrect = (G._lastAnswer !== undefined && G._lastAnswer === data.correct);
+      renderPlayerBody_result(myAnsweredThisQ ? wasCorrect : null);
+      break;
+
+    case 'questionDone':
+      renderPlayerBody_wait('ממתין לתור הבא...');
+      break;
+
+    case 'speedRoundStart':
+      renderPlayerBody_wait('⚡ ספיד ראונד מתחיל!');
+      break;
+
+    case 'skippedTurn':
+      renderPlayerBody_wait(`${data.playerName} מדלג תור!`);
+      break;
+
+    case 'win':
+      syncPlayerData(data.players||[]);
+      show('win-screen');
+      showWinScreen(data.winner, data.players||[]);
+      break;
+  }
+}
+
+function syncPlayerData(players){
+  if(!players||!players.length) return;
+  // update myPlayerData
+  if(myPlayerData){
+    const me = players.find(p=>p.id===myPlayerData.id);
+    if(me) myPlayerData = {...myPlayerData, ...me};
+  }
+}
+
+// ═══════════════════════════════════════════
+// PLAYER BODY RENDERERS
+// ═══════════════════════════════════════════
+function renderPlayerHeader(){
+  if(!myPlayerData) return;
+  document.getElementById('pg-token').textContent = myPlayerData.token||'🚢';
+  document.getElementById('pg-name').textContent  = myPlayerData.name||'שחקן';
+  document.getElementById('pg-score').textContent = (myPlayerData.score||0)+' נק׳';
+  document.getElementById('pg-pos').textContent   = 'שדה '+(myPlayerData.position+1||1)+'/30';
+}
+
+function renderPlayerBody(html){
+  document.getElementById('player-body').innerHTML = html;
+}
+
+function renderPlayerBody_wait(msg){
+  renderPlayerBody(`
+    <span class="waiting-spinner">⏳</span>
+    <div class="waiting-msg">${msg}</div>`);
+}
+
+function renderPlayerBody_turn(currentName, isMyTurn){
+  if(isMyTurn){
+    renderPlayerBody(`
+      <div style="text-align:center;color:rgba(255,255,255,.6);margin-bottom:16px;font-size:.95rem">תורך! גלגל קוביה.</div>
+      <button class="dice-roll-btn" id="roll-btn" onclick="playerRoll()">🎲</button>
+      <div style="text-align:center;color:rgba(255,255,255,.4);font-size:.8rem;margin-top:12px">לחץ לגלגל</div>`);
+  } else {
+    renderPlayerBody(`
+      <span class="waiting-spinner">🎲</span>
+      <div class="waiting-msg">תורו של <strong style="color:var(--cyan)">${currentName}</strong></div>`);
+  }
+}
+
+function renderPlayerBody_event(emoji, title, desc){
+  renderPlayerBody(`
+    <div class="event-card-player">
+      <div class="ecp-emoji">${emoji}</div>
+      <div class="ecp-title">${title}</div>
+      <div class="ecp-desc">${desc}</div>
+    </div>`);
+}
+
+function renderPlayerBody_question(q, answers, timeLimit, isSpeed, rollGate){
+  clearInterval(playerQTimer);
+  let t = timeLimit;
+
+  const shapes=['▲','◆','●','■'];
+  const kClasses=['k-red','k-blue','k-yellow','k-green'];
+
+  renderPlayerBody(`
+    ${rollGate?'<div style="color:var(--gold);font-weight:700;font-size:.85rem;margin-bottom:4px">⚓ ענה נכון כדי לגלגל</div>':''}
+    ${isSpeed?'<div style="color:var(--purple);font-weight:700;font-size:.85rem;margin-bottom:4px">⚡ ספיד ראונד</div>':''}
+    <div class="q-timer-player" id="pq-timer">${t}</div>
+    <div class="q-text-player">${q}</div>
+    <div class="kahoot-answers">
+      ${answers.map((a,i)=>`
+        <button class="kahoot-btn ${kClasses[i]}" id="pqa-${i}" onclick="playerAnswer(${i})">
+          <div class="k-shape">${shapes[i]}</div>
+          <div class="k-text">${a}</div>
+        </button>`).join('')}
+    </div>`);
+
+  playerQTimer = setInterval(()=>{
+    t--;
+    const el = document.getElementById('pq-timer');
+    if(el){
+      el.textContent=t;
+      if(t<=5) el.classList.add('urgent');
+    }
+    if(t<=0) clearInterval(playerQTimer);
+  },1000);
+}
+
+function renderPlayerBody_result(correct){
+  clearInterval(playerQTimer);
+  if(correct===undefined||correct===null){
+    renderPlayerBody('<div class="waiting-msg">ממתין לתוצאות...</div>');
+    return;
+  }
+  renderPlayerBody(`
+    <div class="result-card ${correct?'correct':'wrong'}">
+      <div class="result-icon">${correct?'✅':'❌'}</div>
+      <div class="result-label">${correct?'נכון!':'לא נכון'}</div>
+      <div class="result-pts">${correct?'+נקודות!':'אין תזוזה בתור הזה'}</div>
+    </div>`);
+}
+
+function playerRoll(){
+  sfx.dice();
+  const btn = document.getElementById('roll-btn');
+  if(btn) btn.disabled=true;
+  if(hostConn) hostConn.send({type:'roll'});
+  renderPlayerBody_wait('מגלגל...');
+}
+
+function playerAnswer(choice){
+  if(myAnsweredThisQ) return;
+  myAnsweredThisQ = true;
+  sfx.click();
+  // Disable all buttons
+  document.querySelectorAll('.kahoot-btn').forEach(b=>{b.disabled=true;b.classList.add('answered');});
+  // Highlight chosen
+  const chosen = document.getElementById(`pqa-${choice}`);
+  if(chosen) chosen.style.opacity='1';
+  G._lastAnswer = choice; // remember for when host reveals correct answer
+  if(hostConn) hostConn.send({type:'answer', choice});
+}
+
+// ═══════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════
+function randomCode(){
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  return Array.from({length:6},()=>chars[Math.floor(Math.random()*chars.length)]).join('');
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function delay(ms){return new Promise(r=>setTimeout(r,ms))}
+
+function confetti(){
+  const colors=['#ffd700','#00d4ff','#ff6b6b','#00e5a0','#a855f7','#fff'];
+  for(let i=0;i<90;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='confetti';
+      el.style.left=Math.random()*100+'vw';
+      el.style.background=colors[Math.floor(Math.random()*colors.length)];
+      el.style.width=(8+Math.random()*6)+'px';
+      el.style.height=(8+Math.random()*6)+'px';
+      el.style.animationDuration=(2+Math.random()*2.5)+'s';
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),5000);
+    },i*35);
+  }
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+show('landing');
+
+// Support URL hash for quick join: index.html#CODE
+window.addEventListener('load',()=>{
+  const hash=location.hash.replace('#','').trim().toUpperCase();
+  if(hash.length===6){
+    showJoin();
+    document.getElementById('join-code').value=hash;
+  }
+});
+</script>
+</body>
+</html>
