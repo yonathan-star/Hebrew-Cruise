@@ -11,11 +11,11 @@ window.firebaseModuleReady = new Promise(resolve => { window.resolveFirebaseModu
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import {
-  getFirestore, collection, doc, setDoc, addDoc, getDoc,
+  getFirestore, initializeFirestore, collection, doc, setDoc, addDoc, getDoc,
   onSnapshot, query, orderBy, serverTimestamp, deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 window.FirebaseMod = {
-  initializeApp, getFirestore, collection, doc, setDoc, addDoc, getDoc,
+  initializeApp, getFirestore, initializeFirestore, collection, doc, setDoc, addDoc, getDoc,
   onSnapshot, query, orderBy, serverTimestamp, deleteDoc
 };
 window.resolveFirebaseModuleReady();
@@ -491,7 +491,7 @@ async function initFirebase(){
     throw new Error('Missing Firebase config');
   }
   if(!window.firebaseAppMod) window.firebaseAppMod = window.FirebaseMod.initializeApp(FIREBASE_CONFIG);
-  db = window.FirebaseMod.getFirestore(window.firebaseAppMod, 'default');
+  if(!db) db = window.FirebaseMod.initializeFirestore(window.firebaseAppMod, {}, 'default');
 }
 
 function newClientId(){
